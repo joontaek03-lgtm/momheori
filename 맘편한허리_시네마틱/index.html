@@ -69,7 +69,7 @@ a{color:var(--early)}
 .pill{background:none;border:0;border-radius:999px;padding:6px 14px;min-height:40px;font-size:15px;font-weight:500;color:var(--muted);transition:background .2s,color .2s}
 .pill:hover{background:var(--hover);color:var(--fg)}
 .pill.on{background:var(--fg);color:var(--bg)}
-/* site nav: dark bar with Home / About / Contact */
+/* 사이트 메뉴: 어두운 배경 (홈 / 소개 / 문의) */
 .site-nav{background:var(--ink);color:#fff}
 .site-nav .wrap{display:flex;justify-content:flex-end;gap:4px;height:40px;align-items:center}
 .site-nav a{color:#fff;text-decoration:none;font-size:14px;font-weight:500;padding:6px 12px;border-radius:999px;opacity:.82;transition:opacity .2s,background .2s}
@@ -330,9 +330,9 @@ footer b{color:var(--ink-fg)}
 <header class="top">
   <nav class="site-nav" aria-label="사이트">
     <div class="wrap">
-      <a href="#" data-go="home">Home</a>
-      <a href="#about" data-go="about">About</a>
-      <a href="#contact" data-go="contact">Contact</a>
+      <a href="#" data-go="home">홈</a>
+      <a href="#about" data-go="about">소개</a>
+      <a href="#contact" data-go="contact">문의</a>
     </div>
   </nav>
   <div class="wrap top-in">
@@ -635,7 +635,7 @@ function homeHTML(){
 
 /* ---------- 세부 화면 ---------- */
 const PAGES = {
-about:{title:'About', html:() => dHero('t-early','About','맘편한 허리 프로젝트','임신 중 요통을 이해하고, 시기에 맞는 안전한 운동으로 허리 부담을 줄이도록 돕는 교육용 안내 페이지입니다.')
+about:{title:'소개', html:() => dHero('t-early','소개','맘편한 허리 프로젝트','임신 중 요통을 이해하고, 시기에 맞는 안전한 운동으로 허리 부담을 줄이도록 돕는 교육용 안내 페이지입니다.')
  + `<div class="wrap d-body">
   <section class="blk"><h2 class="disp rv">무엇을 담았나요</h2>
    <p class="intro rv">요통의 원인과 증상, 운동할 때 주의할 점, 그리고 임신 초기·중기·후기에 맞춘 운동 프로그램을 차례로 소개합니다.</p></section>
@@ -643,7 +643,7 @@ about:{title:'About', html:() => dHero('t-early','About','맘편한 허리 프�
    <p class="intro rv">상명대학교 스포츠건강관리전공 ONE CORE 팀 — 홍준택 · 김민재 · 김정민 · 안종환 · 이수아</p></section>
   <section class="blk"><p class="intro rv muted">이 페이지의 정보는 교육 목적입니다. 운동을 시작하기 전 담당 산부인과 전문의와 상의하세요.</p></section>
  </div>`},
-contact:{title:'Contact', html:() => dHero('t-late','Contact','문의하기','프로젝트에 대한 질문이나 의견은 아래 팀에게 전해 주세요.')
+contact:{title:'문의', html:() => dHero('t-late','문의','문의하기','프로젝트에 대한 질문이나 의견은 아래 팀에게 전해 주세요.')
  + `<div class="wrap d-body">
   <section class="blk"><h2 class="disp rv">ONE CORE 팀</h2>
    <p class="intro rv">상명대학교 스포츠건강관리전공<br>홍준택 · 김민재 · 김정민 · 안종환 · 이수아</p>

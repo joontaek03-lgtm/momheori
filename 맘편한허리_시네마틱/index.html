@@ -3,14 +3,14 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="description" content="임산부 요통을 줄이는 임신 시기별 운동 프로그램과 원인·증상·안전 수칙 안내">
+<meta name="description" content="출산예정일·체력·운동 습관을 입력하면 임산부에게 맞는 요통 운동 프로그램을 만들어 주는 웹페이지">
 <style>:root{box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
 <title>맘편한 허리 프로젝트</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@700&family=Noto+Sans+KR:wght@400;500;700;900&display=swap">
 <style>
-/* Layout: 홈(히어로+호흡, 통계, 주수 찾기, 시기별 카드, 알아두기, 중단 신호) ↔ 세부 화면, 시기별 색으로 구분 */
+/* Layout: 홈(히어로, 진행 방식, 질문 목록, 통계, 시기별 카드, 알아두기, 중단 신호) + 맞춤 프로그램(입력 → 결과) ↔ 세부 화면, 시기별 색으로 구분 */
 :root{
   --bg:#FBF8F4; --surface:#FFFFFF; --fg:#1F2A28; --muted:#5A6662; --line:#E7E1D9; --hover:#EFE9E1; --tint:#F4EEE7;
   --ink:#1F2A28; --ink-fg:#F3EFE9; --ink-muted:#B7B0A6; --ink-num:#F7B98F;
@@ -110,17 +110,6 @@ a{color:var(--early)}
 .btn svg,.go svg,.back svg{transition:transform .2s}
 .btn:hover svg{transform:translateX(4px)}
 
-.breath{background:var(--surface);border:1px solid var(--line);border-radius:28px;padding:28px;display:grid;justify-items:center;gap:18px;text-align:center}
-.breath-stage{position:relative;width:220px;height:220px;max-width:100%;display:grid;place-items:center}
-.b-ring{position:absolute;inset:0;border-radius:50%;border:2px solid var(--ring);animation:ring 5s ease-out infinite}
-.b-ring.r2{animation-delay:2.5s}
-.b-core{position:absolute;inset:0;border-radius:50%;background:var(--early-soft);animation:breathe 10s ease-in-out infinite}
-.b-label{position:relative;display:grid;place-items:center}
-.b-label span{grid-area:1/1;font-weight:700;font-size:20px;color:var(--early-dark)}
-.b-in{animation:inL 10s linear infinite}
-.b-ex{animation:exL 10s linear infinite}
-.breath h3{font-size:18px}
-.breath p{font-size:15px;color:var(--muted)}
 
 /* stats */
 .stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;margin-block:8px 88px}
@@ -134,23 +123,6 @@ a{color:var(--early)}
 .sec-h h2{font-size:clamp(1.8rem,3.6vw,2.4rem)}
 .sec-h p{color:var(--muted);max-width:40em}
 
-/* finder */
-.finder{background:var(--surface);border:1px solid var(--line);border-radius:28px;padding:36px;display:grid;gap:28px;scroll-margin-top:90px}
-.finder-top{display:flex;justify-content:space-between;align-items:flex-end;gap:16px;flex-wrap:wrap}
-.wk{font-size:64px;line-height:1;font-weight:900;font-variant-numeric:tabular-nums;color:var(--c);transition:color .3s}
-.wk small{font-size:22px;font-weight:700;margin-left:4px}
-.track{display:flex;height:56px;border-radius:16px;overflow:hidden;gap:4px}
-.seg{border:0;color:var(--on-c);background:var(--c);font-weight:700;font-size:15px;display:flex;align-items:center;justify-content:center;gap:8px;transform-origin:left;animation:grow 1s cubic-bezier(.2,.7,.2,1) both;transition:opacity .25s;min-width:0}
-.seg.t-early{flex:13}.seg.t-mid{flex:14;animation-delay:.15s}.seg.t-late{flex:13;animation-delay:.3s}
-.seg.dim{opacity:.3}
-.seg:hover{opacity:1}
-.range-wrap{display:grid;gap:8px}
-.range-wrap label{font-size:14px;font-weight:700;color:var(--muted)}
-.range{width:100%;accent-color:var(--c);height:28px;cursor:pointer}
-.ticks{display:flex;justify-content:space-between;font-size:13px;color:var(--muted);font-variant-numeric:tabular-nums}
-.rec{display:flex;gap:20px;align-items:center;justify-content:space-between;flex-wrap:wrap;border-radius:20px;padding:22px 26px;background:var(--soft);transition:background .3s}
-.rec h3{font-size:22px;color:var(--dark)}
-.rec p{font-size:15px}
 
 /* program cards */
 .progs{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px}
@@ -287,21 +259,120 @@ footer b{color:var(--ink-fg)}
 .pager button{background:var(--surface);border:1px solid var(--line);border-radius:999px;padding:0 22px;min-height:52px;font-weight:700;transition:border-color .2s,transform .2s}
 .pager button:hover{border-color:var(--fg);transform:translateY(-2px)}
 
+/* home: 예시 카드 · 진행 방식 · 질문 목록 */
+.hero-note{margin-top:14px;font-size:14px;color:var(--muted)}
+.mock{background:var(--surface);border:1px solid var(--line);border-radius:28px;padding:28px;display:grid;gap:14px;box-shadow:0 24px 48px var(--shadow)}
+.mock-k{font-size:13px;font-weight:700;color:var(--mid)}
+.mock h3{font-size:22px}
+.mock-w{list-style:none;display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:6px}
+.mock-w li{aspect-ratio:1;border-radius:12px;background:var(--tint);display:grid;place-items:center;font-size:13px;font-weight:700;color:var(--muted)}
+.mock-w li.core{background:var(--mid);color:var(--on-c)}
+.mock-w li.cardio{background:var(--early);color:var(--on-c)}
+.mock-l{list-style:none;display:grid;gap:8px;border-top:1px dashed var(--line);padding-top:14px}
+.mock-l li{display:flex;justify-content:space-between;gap:12px;font-size:15px}
+.mock-l span{color:var(--muted);text-align:right}
+.how{list-style:none;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px}
+.how li{background:var(--surface);border:1px solid var(--line);border-radius:24px;padding:28px;display:grid;gap:10px;align-content:start}
+.how-n{width:44px;height:44px;border-radius:50%;background:var(--fg);color:var(--bg);display:grid;place-items:center;font-weight:900;font-size:18px}
+.how h3{font-size:19px;line-height:1.5}
+.how p{font-size:14px;color:var(--muted)}
+.ask{background:var(--early-soft);border-radius:28px;padding:40px;display:grid;gap:24px;justify-items:start}
+.ask .sec-h{margin:0}
+.ask-l{list-style:none;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;width:100%}
+.ask-l li{background:var(--surface);border-radius:16px;padding:16px 18px;display:grid;gap:2px}
+.ask-l b{font-size:16px}
+.ask-l span{font-size:14px;color:var(--muted)}
+
+/* 맞춤 프로그램 입력 */
+.btn:disabled{opacity:.4;cursor:not-allowed;transform:none;box-shadow:none}
+.qz-wrap{padding-block:40px 80px}
+.qz{max-width:640px;margin:0 auto;background:var(--surface);border:1px solid var(--line);border-radius:28px;padding:36px;display:grid;gap:14px;scroll-margin-top:120px}
+.qz-top{display:flex;align-items:center;gap:14px;font-size:14px;font-weight:700;color:var(--muted);font-variant-numeric:tabular-nums}
+.qz-bar{flex:1;height:8px;border-radius:999px;background:var(--tint);overflow:hidden}
+.qz-bar i{display:block;height:100%;background:var(--early);border-radius:999px;transition:width .4s cubic-bezier(.2,.7,.2,1)}
+.qz h1{font-size:clamp(1.6rem,4.4vw,2.1rem);margin-top:10px}
+.qz-sub{color:var(--muted)}
+.qz-body{display:grid;gap:12px;margin-top:10px}
+.qz-lbl{font-size:14px;font-weight:700;color:var(--muted);margin-top:6px}
+.qz-hint{font-size:15px;color:var(--muted)}
+.qz-hint b{color:var(--early-dark)}
+.qz-nav{display:flex;justify-content:space-between;gap:12px;margin-top:14px}
+.opts{display:grid;gap:10px}
+.opts.row{grid-template-columns:repeat(3,minmax(0,1fr))}
+.opt{text-align:left;background:var(--bg);border:2px solid var(--line);border-radius:16px;padding:14px 18px;display:grid;gap:2px;min-height:56px;transition:border-color .2s,background .2s}
+.opt:hover{border-color:var(--muted)}
+.opt.on{border-color:var(--early);background:var(--early-soft)}
+.opt b{font-size:16px}
+.opt span{font-size:14px;color:var(--muted)}
+.opts.row .opt{text-align:center;justify-items:center;padding:12px 8px}
+.fld{display:grid;gap:6px;font-size:14px;font-weight:700;color:var(--muted)}
+.fld input{font:inherit;font-size:18px;font-weight:500;color:var(--fg);background:var(--bg);border:2px solid var(--line);border-radius:14px;padding:12px 14px;min-height:54px;width:100%;min-width:0}
+.fld input:focus{outline:none;border-color:var(--early)}
+.fld2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.unit{position:relative;display:block}
+.unit i{position:absolute;right:16px;top:50%;transform:translateY(-50%);font-style:normal;color:var(--muted);font-weight:500;pointer-events:none}
+.unit input{padding-right:48px}
+.chips2{display:flex;flex-wrap:wrap;gap:8px}
+.chip{background:var(--bg);border:1px solid var(--line);border-radius:999px;padding:0 16px;min-height:40px;font-size:15px;font-weight:500}
+.chip.on{background:var(--fg);color:var(--bg);border-color:var(--fg)}
+
+/* 맞춤 프로그램 결과 */
+.ov dd .sub{font-weight:500}
+.wkg{list-style:none;display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:10px}
+.wd{border-radius:18px;padding:16px 12px;display:grid;gap:4px;align-content:start;background:var(--surface);border:1px solid var(--line);min-width:0}
+.wd .dn{font-size:13px;font-weight:900;color:var(--muted)}
+.wd b{font-size:15px;line-height:1.4}
+.wd > span:last-child:not(.dn){font-size:13px;color:var(--muted)}
+.wd.core{background:var(--c);border-color:var(--c);color:var(--on-c)}
+.wd.core .dn,.wd.core > span{color:var(--on-c);opacity:.85}
+.wd.cardio{background:var(--soft);border-color:var(--soft)}
+.wd.rest{opacity:.6}
+.rxg{display:grid;gap:12px}
+.rxg h3{font-size:18px;color:var(--dark)}
+.rxl{list-style:none;display:grid;gap:10px}
+.rx{display:grid;grid-template-columns:44px minmax(0,1fr);gap:14px;background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:16px 18px}
+.rx > div{display:grid;gap:6px;min-width:0}
+.rx b{font-size:17px}
+.rx-m{font-size:14px;color:var(--muted)}
+.rx-v{font-size:14px;border-radius:10px;padding:6px 10px;justify-self:start}
+.rx-v.e{background:var(--early-soft);color:var(--early-dark)}
+.rx-v.h{background:var(--mid-soft);color:var(--mid-dark)}
+.rx-v.c{background:var(--danger-soft);color:var(--danger-dark)}
+.rx details summary{cursor:pointer;font-size:14px;font-weight:700;color:var(--dark);min-height:32px;display:flex;align-items:center}
+.rx details ol{padding-left:1.2em;display:grid;gap:4px;font-size:15px}
+.rs-act{margin-top:0}
+@media print{
+  .top,footer,.rs-act,.back,.pager{display:none!important}
+  .rx details{display:block}
+  .rx details > *{display:block}
+  .d-hero{border-radius:0}
+}
+
 @media (max-width:900px){
   .hero{grid-template-columns:minmax(0,1fr);padding-top:44px}
-  .stats,.progs,.tiles,.g3,.stop-list{grid-template-columns:minmax(0,1fr)}
+  .stats,.progs,.tiles,.g3,.stop-list,.how{grid-template-columns:minmax(0,1fr)}
+  .ask-l{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .wkg{grid-template-columns:repeat(4,minmax(0,1fr))}
   .d-grid{grid-template-columns:minmax(0,1fr)}
   .ov{grid-template-columns:repeat(2,minmax(0,1fr))}
 }
 @media (max-width:640px){
   .wrap{padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
-  .g2,.bal{grid-template-columns:minmax(0,1fr)}
-  .finder,.stop{padding:22px}
+  .g2,.bal,.ask-l{grid-template-columns:minmax(0,1fr)}
+  .wkg{grid-template-columns:minmax(0,1fr)}
+  .wd{grid-template-columns:2.2em minmax(0,1fr) auto;align-items:center;padding:12px 14px}
+  .opts.row .opt{padding:12px 4px}
+  .stop,.ask,.qz{padding:22px}
   .seg span{display:none}
   .wk{font-size:52px}
   .subnav{position:static}
   .top-in{gap:6px}
   .pill{padding:6px 10px;font-size:14px}
+  .top-in{flex-wrap:nowrap;flex-direction:column;align-items:stretch;gap:2px;padding-block:6px}
+  .nav{flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;margin-inline:-6px}
+  .nav::-webkit-scrollbar{display:none}
+  .pill{flex:none}
+  .subnav{top:auto}
 }
 @media (prefers-reduced-motion:reduce){
   *,*::before,*::after{animation:none !important;transition:none !important}
@@ -514,24 +585,39 @@ function homeHTML(){
       <ul>${li(p.points)}</ul>
       <span class="go">운동 ${countOf(id)}가지 보기${ARROW}</span>
     </button>`; }).join('');
+  const steps = [['출산예정일, 키·몸무게, 체력, 운동 습관을 알려주세요','6개 질문 · 1분'],['지금 주수와 체력에 맞춰 강도와 운동을 골라요','초기 · 중기 · 후기 × 3단계'],['요일별 계획과 허리 운동 루틴을 따라 해요','저장·인쇄 가능']];
+  const asks = [['출산 예정일','지금 주수와 시기 계산'],['키 · 몸무게','관절 부담과 강도 참고'],['현재 체력','걷기, 빠르게 걷기, 조깅 가능 여부'],['운동 빈도 · 시간','일주일 몇 번, 한 번에 몇 분'],['운동 경험','처음인지, 꾸준히 해 왔는지'],['안전 확인','운동 제한을 들은 적이 있는지']];
   return `<div class="view-in"><div class="wrap">
   <section class="hero">
     <div>
-      <p class="eyebrow a1">임산부 요통 개선 운동 프로그램</p>
-      <h1 class="disp a2"><span class="t">허리가 편해야<br><em><span>열 달</span></em>이 편합니다</span></h1>
-      <p class="lead a3">임신 중 허리·골반 통증을 줄이는 단계별 운동 프로그램. 선행연구와 미국산부인과학회(ACOG) 지침을 바탕으로, 시기마다 안전한 자세와 운동만 골랐습니다.</p>
+      <p class="eyebrow a1">임산부 맞춤 요통 운동 프로그램</p>
+      <h1 class="disp a2"><span class="t">내 몸에 맞춘<br><em><span>열 달</span></em> 허리 운동</span></h1>
+      <p class="lead a3">출산예정일과 체력, 운동 습관을 알려주시면 지금 주수에 맞는 안전한 운동 계획을 만들어 드려요. 선행연구와 미국산부인과학회(ACOG) 지침을 바탕으로 했어요.</p>
       <div class="cta a4">
-        <button class="btn pri" type="button" data-scroll="finder">내 주수에 맞는 운동 찾기${ARROW}</button>
-        <button class="btn sec" type="button" data-go="cause">요통은 왜 생길까?</button>
+        <button class="btn pri" type="button" data-go="plan">내 프로그램 만들기${ARROW}</button>
+        <button class="btn sec" type="button" data-scroll="progs">시기별 운동 보기</button>
       </div>
+      <p class="hero-note a5">1분이면 충분해요 · 회원가입 없이 바로</p>
     </div>
-    <aside class="breath a5" aria-label="호흡 따라하기">
-      <div class="breath-stage" aria-hidden="true">
-        <span class="b-ring"></span><span class="b-ring r2"></span><span class="b-core"></span>
-        <span class="b-label"><span class="b-in">들이마시기 4초</span><span class="b-ex">내쉬기 6초</span></span>
-      </div>
-      <div><h3>지금 함께 호흡해 보세요</h3><p>원이 커질 때 코로 들이마시고, 작아질 때 입으로 길게 내쉽니다.</p></div>
+    <aside class="mock a5" aria-label="맞춤 프로그램 예시">
+      <p class="mock-k">예시 · 24주 3일</p>
+      <h3>임신 중기 · 기본 단계</h3>
+      <ol class="mock-w">${DAYS.map((d,i)=>`<li class="${[0,2,4].includes(i)?'core':(i===5?'cardio':'')}"><span>${d}</span></li>`).join('')}</ol>
+      <ul class="mock-l"><li><b>허리 운동</b><span>월 · 수 · 금 25분</span></li><li><b>걷기</b><span>토 20–30분</span></li><li><b>강도</b><span>대화를 편하게 할 수 있는 정도</span></li></ul>
     </aside>
+  </section>
+
+  <section class="sec">
+    <div class="sec-h rv"><p class="eyebrow">HOW IT WORKS</p><h2 class="disp">세 단계로 내 프로그램이 만들어져요</h2></div>
+    <ol class="how">${steps.map((x,i)=>`<li class="rv"><span class="how-n">${i+1}</span><h3>${x[0]}</h3><p>${x[1]}</p></li>`).join('')}</ol>
+  </section>
+
+  <section class="sec">
+    <div class="ask rv">
+      <div class="sec-h"><p class="eyebrow">무엇을 물어보나요</p><h2 class="disp">여섯 가지 정보로 강도와 운동을 정해요</h2><p>같은 주수라도 체력과 운동 경험에 따라 맞는 운동이 달라요.</p></div>
+      <ul class="ask-l">${asks.map(a=>`<li><b>${a[0]}</b><span>${a[1]}</span></li>`).join('')}</ul>
+      <button class="btn pri" type="button" data-go="plan">지금 시작하기${ARROW}</button>
+    </div>
   </section>
 
   <div class="stats">
@@ -540,38 +626,13 @@ function homeHTML(){
     <div class="stat a5"><b><span data-count="22">22</span>%<small>vs</small><span data-count="31">31</span>%</b><span>요통으로 병가를 낸 비율 (운동군 vs 비운동군)</span><cite>Stafne et al., 2012 · 855명 RCT</cite></div>
   </div>
 
-  <section class="sec">
-    <div class="sec-h rv">
-      <p class="eyebrow">STEP 1 · 시기별 프로그램</p>
-      <h2 class="disp">지금 임신 몇 주차인가요?</h2>
-      <p>슬라이더를 움직이면 지금 시기에 맞는 운동 프로그램을 알려드려요.</p>
-    </div>
-    <div class="finder rv" id="finder">
-      <div class="finder-top">
-        <div class="wk" id="wk-num">20<small>주차</small></div>
-        <p class="muted" style="font-size:15px">40주를 세 시기로 나눠 자세와 강도를 조절합니다</p>
-      </div>
-      <div class="track">
-        <button type="button" class="seg t-early" data-go="early" aria-label="임신 초기 1–13주 프로그램 보기">초기<span>1–13주</span></button>
-        <button type="button" class="seg t-mid" data-go="mid" aria-label="임신 중기 14–27주 프로그램 보기">중기<span>14–27주</span></button>
-        <button type="button" class="seg t-late" data-go="late" aria-label="임신 후기 28–40주 프로그램 보기">후기<span>28–40주</span></button>
-      </div>
-      <div class="range-wrap">
-        <label for="wk-range">임신 주수 선택</label>
-        <input id="wk-range" class="range" type="range" min="1" max="40" step="1" value="20">
-        <div class="ticks"><span>1주</span><span>13주</span><span>27주</span><span>40주</span></div>
-      </div>
-      <div class="rec">
-        <div><h3 id="rec-h"></h3><p id="rec-p"></p></div>
-        <button class="btn pri" type="button" id="rec-go">프로그램 보기${ARROW}</button>
-      </div>
-    </div>
+  <section class="sec" id="progs">
+    <div class="sec-h rv"><p class="eyebrow">시기별 프로그램</p><h2 class="disp">초기 · 중기 · 후기 운동 모아 보기</h2><p>맞춤 프로그램은 이 운동들 가운데 나에게 맞는 것을 골라 구성해요.</p></div>
+    <div class="progs">${cards}</div>
   </section>
 
-  <section class="sec"><div class="progs">${cards}</div></section>
-
   <section class="sec">
-    <div class="sec-h rv"><p class="eyebrow">STEP 2 · 운동 전에 알아두기</p><h2 class="disp">내 몸에 무슨 일이 생기고 있을까</h2></div>
+    <div class="sec-h rv"><p class="eyebrow">가볍게 알아두기</p><h2 class="disp">운동 전에 알아두면 좋아요</h2></div>
     <div class="tiles">
       <button type="button" class="tile rv" data-go="cause">
         <span class="ic"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><path d="M20 20l-3.5-3.5"></path></svg></span>
@@ -605,10 +666,10 @@ function homeHTML(){
 
 /* ---------- 세부 화면 ---------- */
 const PAGES = {
-about:{title:'소개', html:() => dHero('t-early','소개','맘편한 허리 프로젝트','임신 중 요통을 이해하고, 시기에 맞는 안전한 운동으로 허리 부담을 줄이도록 돕는 교육용 안내 페이지입니다.')
+about:{title:'소개', html:() => dHero('t-early','소개','맘편한 허리 프로젝트','임산부의 정보를 바탕으로 주수와 체력에 맞는 요통 운동 프로그램을 만들어 주는 교육용 웹페이지입니다.')
  + `<div class="wrap d-body">
   <section class="blk"><h2 class="disp rv">무엇을 담았나요</h2>
-   <p class="intro rv">요통의 원인과 증상, 운동할 때 주의할 점, 그리고 임신 초기·중기·후기에 맞춘 운동 프로그램을 차례로 소개합니다.</p></section>
+   <p class="intro rv">출산예정일, 키·몸무게, 체력, 운동 빈도와 경험을 입력하면 지금 주수와 몸 상태에 맞는 허리 운동 계획을 만들어 드립니다. 요통의 원인과 증상, 운동할 때 주의할 점도 함께 담았습니다.</p></section>
   <section class="blk"><h2 class="disp rv">만든 사람들</h2>
    <p class="intro rv">상명대학교 스포츠건강관리전공 ONE CORE 팀 — 홍준택 · 김민재 · 김정민 · 안종환 · 이수아</p></section>
   <section class="blk"><p class="intro rv muted">이 페이지의 정보는 교육 목적입니다. 운동을 시작하기 전 담당 산부인과 전문의와 상의하세요.</p></section>
@@ -738,27 +799,173 @@ function progHTML(id){
   </div></div>`;
 }
 
+/* ---------- 맞춤 프로그램: 정보 입력 → 운동 계획 ---------- */
+const PLAN_KEY = 'mh-plan-v1';
+let plan = {due:'',h:'',w:'',fit:'',freq:'',dur:'',exp:'',kinds:[],med:''};
+try { const s = JSON.parse(localStorage.getItem(PLAN_KEY) || 'null'); if(s) plan = Object.assign(plan, s); } catch(_){}
+const savePlan = () => { try { localStorage.setItem(PLAN_KEY, JSON.stringify(plan)); } catch(_){} };
+let qStep = 0, qDone = false;
+
+const FIT = [['low','10분만 걸어도 힘들어요','숨이 쉽게 차고 자주 쉬어야 해요'],['walk','30분 걷기는 괜찮아요','편한 속도라면 무리 없어요'],['brisk','빠르게 걷기·계단도 괜찮아요','조금 숨차도 대화는 할 수 있어요'],['jog','가벼운 조깅도 할 수 있어요','요즘도 달리기를 하고 있어요']];
+const FREQ = [['1','주 1–2회'],['3','주 3–4회'],['5','주 5회 이상']];
+const DUR = [['15','15분 정도'],['25','20–30분'],['40','40분 이상']];
+const EXP = [['none','거의 없어요','규칙적으로 운동한 적이 없어요'],['some','가끔 했어요','주 1–2회 정도, 띄엄띄엄'],['regular','꾸준히 했어요','임신 전 주 3회 이상']];
+const KINDS = ['걷기','요가·필라테스','근력 운동','달리기','수영','기타'];
+const MED = [['no','아니요, 들은 적 없어요'],['unsure','잘 모르겠어요'],['yes','네, 들은 적 있어요']];
+const LV = {1:{name:'입문',rpe:'RPE 11–12',talk:'노래를 부를 수 있을 만큼 편하게'},2:{name:'기본',rpe:'RPE 12–13',talk:'대화를 편하게 할 수 있는 정도'},3:{name:'활동',rpe:'RPE 13–14',talk:'조금 숨차지만 대화는 되는 정도'}};
+const DAYS = ['월','화','수','목','금','토','일'];
+const esc = s => String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+
+function gaOf(due){
+  if(!due) return null;
+  const d = new Date(due + 'T00:00:00'), t = new Date(); t.setHours(0,0,0,0);
+  if(isNaN(d)) return null;
+  const left = Math.round((d - t) / 864e5);
+  return {days: 280 - left, left, wk: Math.floor((280 - left) / 7), d: (280 - left) % 7};
+}
+const dueOk = () => { const g = gaOf(plan.due); return !!g && g.days >= 0 && g.days <= 294; };
+function dueMsg(){
+  const g = gaOf(plan.due); if(!g) return '예정일을 고르면 지금 주수를 알려드려요.';
+  if(g.days < 0) return '예정일이 40주보다 멀어요. 날짜를 다시 확인해 주세요.';
+  if(g.days > 294) return '예정일이 2주 넘게 지났어요. 날짜를 다시 확인해 주세요.';
+  const tri = PROGS[triOf(Math.max(1, g.wk))].kicker;
+  return `지금 <b>${g.wk}주 ${g.d}일</b> · ${tri} · ${g.left > 0 ? `출산까지 ${g.left}일` : '예정일이 지났어요'}`;
+}
+const bodyOk = () => +plan.h >= 130 && +plan.h <= 200 && +plan.w >= 35 && +plan.w <= 180;
+const bmiOf = () => +plan.w / Math.pow(+plan.h / 100, 2);
+const bmiMsg = () => bodyOk() ? `BMI ${bmiOf().toFixed(1)} · 참고용이에요. 임신 중 체중이 느는 건 자연스러운 일이에요.` : '키는 130–200cm, 몸무게는 35–180kg 사이로 입력해 주세요.';
+
+const opts = (key, list, row) => `<div class="opts${row ? ' row' : ''}" role="radiogroup">${list.map(o =>
+  `<button type="button" class="opt${plan[key] === o[0] ? ' on' : ''}" role="radio" aria-checked="${plan[key] === o[0]}" data-k="${key}" data-v="${o[0]}"><b>${o[1]}</b>${o[2] ? `<span>${o[2]}</span>` : ''}</button>`).join('')}</div>`;
+
+const STEPS = [
+ {t:'출산 예정일이 언제인가요?', s:'예정일로 지금 임신 몇 주인지 계산해요.', html:() => `
+   <label class="fld"><span>출산 예정일</span><input type="date" data-f="due" value="${esc(plan.due)}"></label>
+   <p class="qz-hint" id="qz-live">${dueMsg()}</p>`, ok:dueOk},
+ {t:'키와 몸무게를 알려주세요', s:'운동 강도와 관절 부담을 정할 때 참고해요.', html:() => `
+   <div class="fld2">
+    <label class="fld"><span>키</span><span class="unit"><input type="number" inputmode="decimal" min="130" max="200" data-f="h" value="${esc(plan.h)}" placeholder="160"><i>cm</i></span></label>
+    <label class="fld"><span>현재 몸무게</span><span class="unit"><input type="number" inputmode="decimal" min="35" max="180" data-f="w" value="${esc(plan.w)}" placeholder="60"><i>kg</i></span></label>
+   </div>
+   <p class="qz-hint" id="qz-live">${bmiMsg()}</p>`, ok:bodyOk},
+ {t:'지금 체력은 어느 정도인가요?', s:'요즘 컨디션에 가장 가까운 것을 골라주세요.', html:() => opts('fit', FIT), ok:() => !!plan.fit},
+ {t:'일주일에 얼마나 운동할 수 있나요?', s:'무리 없이 지킬 수 있는 만큼 골라주세요.', html:() => `<p class="qz-lbl">횟수</p>${opts('freq', FREQ, 1)}<p class="qz-lbl">한 번에</p>${opts('dur', DUR, 1)}`, ok:() => !!(plan.freq && plan.dur)},
+ {t:'운동 경험이 있나요?', s:'임신 전을 포함해서 알려주세요.', html:() => `${opts('exp', EXP)}<p class="qz-lbl">해 본 운동 (선택)</p><div class="chips2">${KINDS.map(k => `<button type="button" class="chip${plan.kinds.includes(k) ? ' on' : ''}" aria-pressed="${plan.kinds.includes(k)}" data-kind="${k}">${k}</button>`).join('')}</div>`, ok:() => !!plan.exp},
+ {t:'마지막으로 확인할게요', s:'담당 의사에게 임신 중 운동을 제한하라는 말을 들은 적이 있나요?', html:() => opts('med', MED) + `<p class="qz-hint">전치태반, 조기 진통 위험, 자궁경부 무력증, 임신성 고혈압 등이 있다면 운동 전에 꼭 상담이 필요해요.</p>`, ok:() => !!plan.med}
+];
+
+function planHTML(){
+  return `<section class="qz-wrap"><div class="wrap"><div class="qz" id="qz"></div></div></section>`;
+}
+function renderPlan(){
+  if(qDone && !STEPS.every(s => s.ok())) qDone = false;
+  app.innerHTML = qDone ? resultHTML() : planHTML();
+  if(!qDone) renderQ();
+  window.scrollTo(0, 0);
+}
+function renderQ(){
+  const box = document.getElementById('qz'); if(!box) return;
+  const s = STEPS[qStep];
+  box.innerHTML = `
+   <div class="qz-top"><span>${qStep + 1} / ${STEPS.length}</span><div class="qz-bar"><i style="width:${(qStep + 1) / STEPS.length * 100}%"></i></div></div>
+   <h1 class="disp">${s.t}</h1><p class="qz-sub">${s.s}</p>
+   <div class="qz-body">${s.html()}</div>
+   <div class="qz-nav">
+    ${qStep ? `<button type="button" class="btn sec" data-qz="prev">이전</button>` : '<span></span>'}
+    <button type="button" class="btn pri" data-qz="next" ${s.ok() ? '' : 'disabled'}>${qStep === STEPS.length - 1 ? '내 프로그램 보기' : '다음'}${ARROW}</button>
+   </div>`;
+}
+function refreshQ(){
+  const s = STEPS[qStep], live = document.getElementById('qz-live');
+  if(live) live.innerHTML = qStep === 0 ? dueMsg() : bmiMsg();
+  const nx = document.querySelector('[data-qz="next"]'); if(nx) nx.disabled = !s.ok();
+}
+
+function buildPlan(){
+  const g = gaOf(plan.due), tri = triOf(Math.max(1, g.wk)), P = PROGS[tri], bmi = bmiOf();
+  const fi = FIT.findIndex(f => f[0] === plan.fit), ei = EXP.findIndex(e => e[0] === plan.exp);
+  let lv = fi + ei <= 1 ? 1 : (fi + ei <= 3 ? 2 : 3);
+  if(bmi >= 30 || plan.med === 'unsure') lv = Math.min(lv, 2);
+  const limited = plan.med === 'yes'; if(limited) lv = 1;
+  const coreMin = {15:15, 25:25, 40:30}[plan.dur];
+  const cardioMin = {1:12, 2:25, 3:30}[lv], cardioTxt = {1:'10–15분',2:'20–30분',3:'30분'}[lv];
+  let cardio = {low:'천천히 걷기', walk:'편한 속도로 걷기', brisk:'빠르게 걷기·실내 자전거', jog:'빠르게 걷기·실내 자전거'}[plan.fit];
+  if(plan.fit === 'jog' && plan.exp === 'regular' && tri !== 'late') cardio = '가벼운 조깅 또는 빠르게 걷기';
+  if(plan.kinds.includes('수영')) cardio += ' · 수영';
+  const lay = {1:{core:[1,5], cardio:[], rest:[]}, 3:{core:[0,2,4], cardio:[5], rest:[6]}, 5:{core:[0,2,4], cardio:[1,3,5], rest:[6]}}[plan.freq];
+  const week = DAYS.map((d, i) => {
+    if(lay.core.includes(i)) return {d, k:'core', t:limited ? '호흡·스트레칭' : '허리 운동', m:limited ? '10분' : `${coreMin}분${plan.dur === '40' ? ' + 걷기 10분' : ''}`};
+    if(lay.cardio.includes(i) && !limited) return {d, k:'cardio', t:cardio, m:cardioTxt};
+    if(lay.rest.includes(i)) return {d, k:'rest', t:'쉬기', m:''};
+    return {d, k:'light', t:'가볍게 움직이기', m:'스트레칭 5분'};
+  });
+  const total = limited ? 0 : lay.core.length * (coreMin + (plan.dur === '40' ? 10 : 0)) + lay.cardio.length * cardioMin;
+  const cut = {15:[2,2,2], 25:[3,4,3], 40:[3,99,3]}[plan.dur];
+  const phases = P.phases.map((ph, i) => ({name:ph.name, items:ph.items.slice(0, cut[i])})).filter((ph, i) => !limited || i !== 1);
+  const notes = [];
+  if(plan.med === 'unsure') notes.push('다음 진료 때 운동해도 되는지 꼭 확인하세요. 그 전까지는 강도를 낮게 유지해요.');
+  if(g.days >= 280) notes.push('예정일이 지났어요. 호흡과 가벼운 걷기 위주로 하고 담당 의사의 안내를 따르세요.');
+  if(bmi >= 30) notes.push('관절 부담을 줄이도록 점프나 오래 서 있는 동작 대신 앉거나 지지하는 운동 위주로 하고, 강도는 천천히 올려요.');
+  if(bmi < 18.5) notes.push('체중이 적게 늘 수 있어요. 운동량을 늘리기 전에 식사와 체중 변화를 담당 의사와 확인해요.');
+  if(plan.exp === 'none') notes.push('운동이 처음이라면 쉬운 단계부터 시작하고, 다음 날 통증과 피로를 확인하며 늘려요.');
+  if(plan.fit === 'jog' && tri === 'late') notes.push('후기에는 달리기 대신 빠르게 걷기나 수중 운동으로 바꾸는 것을 권해요.');
+  if(plan.freq === '1') notes.push('운동하지 않는 날에도 10분씩 걷기처럼 가볍게 움직이면 허리 부담을 덜 수 있어요.');
+  notes.push(...P.warn.slice(0, 2));
+  return {g, tri, P, lv, limited, week, total, phases, notes, coreMin};
+}
+
+function resultHTML(){
+  const r = buildPlan(), L = LV[r.lv]; let k = 0;
+  const dose = s => r.lv === 1 ? s.replace('× 2세트', '× 1–2세트') : s;
+  const goal = r.limited ? '의사와 상의 후 정하기' : (r.total >= 150 ? `주 ${r.total}분 · 권장량 달성` : `주 약 ${r.total}분 → 150분까지`);
+  return `<div class="t-${r.tri} view-in">
+  <section class="d-hero"><div class="wrap">
+   <button class="back" type="button" data-qz="edit">${BACK}입력 다시 하기</button>
+   <p class="eyebrow a1">나의 맞춤 프로그램</p>
+   <h1 class="disp a2">${r.P.kicker} · ${L.name} 단계</h1>
+   <p class="lead a3">${r.g.wk}주 ${r.g.d}일${r.g.left > 0 ? `, 출산까지 ${r.g.left}일` : ''}. 체력과 운동 습관에 맞춰 이번 주 운동 계획을 만들었어요.</p>
+   <dl class="ov a4">
+    <div><dt>강도</dt><dd>${L.rpe}<span class="sub">${L.talk}</span></dd></div>
+    <div><dt>허리 운동</dt><dd>${r.limited ? '호흡·스트레칭 10분' : `1회 ${r.coreMin}분`}</dd></div>
+    <div><dt>주간 운동량</dt><dd>${goal}</dd></div>
+    <div><dt>프로그램</dt><dd>${r.P.kicker} (${r.P.weeks}주)</dd></div>
+   </dl>
+  </div></section>
+  <div class="wrap d-body">
+   ${r.limited ? `<div class="stop"><div class="stop-h"><span class="stop-ic">${ALERT}</span><h3>운동 전에 담당 의사와 먼저 상의하세요</h3></div><p>운동 제한을 들었다면 의사가 허락한 범위 안에서만 운동해야 해요. 아래에는 대부분 부담이 적은 호흡과 스트레칭만 담았어요.</p></div>` : ''}
+   <section class="blk"><h2 class="disp">이번 주 계획</h2>
+    <ol class="wkg">${r.week.map(d => `<li class="wd ${d.k}"><span class="dn">${d.d}</span><b>${d.t}</b>${d.m ? `<span>${d.m}</span>` : ''}</li>`).join('')}</ol>
+    ${r.limited ? '' : `<p class="intro">2주 동안 몸이 적응하면 걷기 시간을 5분씩 늘려, 주 150분(미국산부인과학회 권장)에 가까워지도록 해요.</p>`}
+   </section>
+   <section class="blk"><h2 class="disp">허리 운동 루틴</h2>
+    ${r.phases.map(ph => `<div class="rxg"><h3>${ph.name}</h3><ol class="rxl">${ph.items.map(e => { k++; return `
+     <li class="rx"><span class="ex-no">${pad(k)}</span><div>
+      <b>${e.n}</b><span class="rx-m">${e.pos} · ${dose(e.dose)}</span>
+      ${r.lv === 1 && e.easy ? `<span class="rx-v e">쉬운 단계로 · ${e.easy}</span>` : ''}
+      ${r.lv === 3 && e.hard ? `<span class="rx-v h">익숙해지면 · ${e.hard}</span>` : ''}
+      ${e.caution ? `<span class="rx-v c">주의 · ${e.caution}</span>` : ''}
+      <details><summary>방법 보기</summary><ol>${li(e.how)}</ol></details>
+     </div></li>`; }).join('')}</ol></div>`).join('')}
+   </section>
+   <section class="blk"><h2 class="disp">나에게 맞춘 주의사항</h2><div class="note"><ul>${li(r.notes)}</ul></div></section>
+   ${STOP}
+   <div class="cta rs-act">
+    <button type="button" class="btn pri" data-go="${r.tri}">${r.P.kicker} 전체 운동 보기${ARROW}</button>
+    <button type="button" class="btn sec" data-print>저장·인쇄하기</button>
+    <button type="button" class="btn sec" data-qz="edit">입력 다시 하기</button>
+   </div>
+  </div></div>`;
+}
+
 /* ---------- 화면 전환 ---------- */
 const ORDER = ['cause','symptom','consider','early','mid','late'];
 const TITLES = {cause:'요통 유발원인',symptom:'주요 증상',consider:'운동 시 고려사항',early:'임신 초기 프로그램',mid:'임신 중기 프로그램',late:'임신 후기 프로그램'};
-const NAV = [['home','처음'],['cause','요통 원인'],['symptom','증상'],['consider','운동 시 주의'],['early','초기'],['mid','중기'],['late','후기']];
+const NAV = [['home','처음'],['plan','맞춤 프로그램'],['early','초기'],['mid','중기'],['late','후기'],['cause','알아두기']];
 const app = document.getElementById('app'), nav = document.getElementById('nav');
 const siteLinks = document.querySelectorAll('.site-nav a');
-let week = 20;
 const triOf = w => w <= 13 ? 'early' : (w <= 27 ? 'mid' : 'late');
 const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-function setWeek(w){
-  week = w; const id = triOf(w), p = PROGS[id];
-  const f = document.getElementById('finder'); if(!f) return;
-  f.classList.remove('t-early','t-mid','t-late'); f.classList.add('t-' + id);
-  document.getElementById('wk-num').innerHTML = `${w}<small>주차</small>`;
-  document.getElementById('rec-h').textContent = `${p.kicker} 프로그램을 추천해요`;
-  document.getElementById('rec-p').textContent = p.short;
-  document.getElementById('rec-go').dataset.go = id;
-  f.querySelectorAll('.seg').forEach(s => s.classList.toggle('dim', s.dataset.go !== id));
-  document.getElementById('wk-range').value = w;
-}
 
 function countUp(){
   document.querySelectorAll('[data-count]').forEach(el => {
@@ -775,11 +982,13 @@ function countUp(){
 }
 
 function show(id){
-  if(!PAGES[id] && !PROGS[id]) id = 'home';
+  if(!PAGES[id] && !PROGS[id] && id !== 'plan') id = 'home';
   nav.innerHTML = NAV.map(n => `<button type="button" class="pill${n[0]===id?' on':''}" data-go="${n[0]}"${n[0]===id?' aria-current="page"':''}>${n[1]}</button>`).join('');
   siteLinks.forEach(a => a.dataset.go === id ? a.setAttribute('aria-current','page') : a.removeAttribute('aria-current'));
   if(id === 'home'){
-    app.innerHTML = homeHTML(); setWeek(week); countUp();
+    app.innerHTML = homeHTML(); countUp();
+  } else if(id === 'plan'){
+    renderPlan(); return;
   } else {
     const i = ORDER.indexOf(id), prev = i < 0 ? null : ORDER[i-1], next = i < 0 ? null : ORDER[i+1];
     const body = PROGS[id] ? progHTML(id) : PAGES[id].html();
@@ -797,15 +1006,32 @@ document.addEventListener('click', e => {
   if(j){ e.preventDefault(); document.getElementById(j.dataset.jump)?.scrollIntoView({behavior: reduce ? 'auto' : 'smooth'}); return; }
   const s = e.target.closest('[data-scroll]');
   if(s){ document.getElementById(s.dataset.scroll)?.scrollIntoView({behavior: reduce ? 'auto' : 'smooth', block:'center'}); return; }
+  const o = e.target.closest('[data-k]');
+  if(o){ plan[o.dataset.k] = o.dataset.v; savePlan(); renderQ(); return; }
+  const kd = e.target.closest('[data-kind]');
+  if(kd){ const v = kd.dataset.kind; plan.kinds = plan.kinds.includes(v) ? plan.kinds.filter(x => x !== v) : plan.kinds.concat(v); savePlan(); renderQ(); return; }
+  const q = e.target.closest('[data-qz]');
+  if(q){
+    const a = q.dataset.qz;
+    if(a === 'prev'){ qStep = Math.max(0, qStep - 1); renderQ(); }
+    else if(a === 'next'){ if(!STEPS[qStep].ok()) return; if(qStep === STEPS.length - 1){ qDone = true; renderPlan(); } else { qStep++; renderQ(); } window.scrollTo(0, 0); }
+    else if(a === 'edit'){ qDone = false; qStep = 0; renderPlan(); }
+    return;
+  }
+  if(e.target.closest('[data-print]')){ window.print(); return; }
   const b = e.target.closest('[data-go]'); if(!b) return;
   const id = b.dataset.go;
   if(id === 'home'){ try { history.replaceState(null, '', location.pathname + location.search); } catch(_){} show('home'); }
   else if(location.hash === '#' + id) show(id);
   else location.hash = id;
 });
-document.addEventListener('input', e => { if(e.target.id === 'wk-range') setWeek(parseInt(e.target.value, 10) || 1); });
+document.addEventListener('input', e => {
+  const f = e.target.dataset && e.target.dataset.f; if(!f) return;
+  plan[f] = e.target.value.trim(); savePlan(); refreshQ();
+});
 window.addEventListener('hashchange', () => show(location.hash.slice(1)));
 
+qDone = STEPS.every(s => s.ok());
 show(location.hash.slice(1));
 </script>
 

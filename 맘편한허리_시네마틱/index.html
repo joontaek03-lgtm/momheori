@@ -20,6 +20,7 @@
   --late:#4F5BA8; --late-soft:#E3E6F7; --late-dark:#3A4486;
   --danger:#B4473A; --danger-soft:#F8E0DB; --danger-dark:#8E2F24; --danger-line:#F0C9C1;
   --shadow:rgba(31,42,40,.12);
+  --qz-bg1:#EEE8F8; --qz-bg2:#F9DDEB; --qz-bar:#E8458B; --qz-bar-dark:#C42F6F; --qz-line:#CFC8D6; --qz-sel:#E4ECFF; --qz-sel-line:#5B7FE8;
   --display:"Gowun Batang","Nanum Myeongjo",serif;
   --body:"Noto Sans KR","Apple SD Gothic Neo","Malgun Gothic",system-ui,sans-serif;
 }
@@ -31,6 +32,7 @@
   --mid:#E38A66; --mid-soft:#3A251C; --mid-dark:#F4B297;
   --late:#909AE2; --late-soft:#252A47; --late-dark:#BAC1F2;
   --danger:#F08A7C; --danger-soft:#3D2220; --danger-dark:#F6ADA2; --danger-line:#5A2E2A;
+  --qz-bg1:#1C1824; --qz-bg2:#2C1A27; --qz-bar:#C2386F; --qz-bar-dark:#97295A; --qz-line:#3E3848; --qz-sel:#232C47; --qz-sel-line:#8DA2F5;
   --shadow:rgba(0,0,0,.4); color-scheme:dark}}
 :root[data-theme="dark"]{
   --bg:#131A19; --surface:#1B2422; --fg:#E8EEEC; --muted:#A3B2AE; --line:#2C3836; --hover:#25302E; --tint:#222C2A;
@@ -40,6 +42,7 @@
   --mid:#E38A66; --mid-soft:#3A251C; --mid-dark:#F4B297;
   --late:#909AE2; --late-soft:#252A47; --late-dark:#BAC1F2;
   --danger:#F08A7C; --danger-soft:#3D2220; --danger-dark:#F6ADA2; --danger-line:#5A2E2A;
+  --qz-bg1:#1C1824; --qz-bg2:#2C1A27; --qz-bar:#C2386F; --qz-bar-dark:#97295A; --qz-line:#3E3848; --qz-sel:#232C47; --qz-sel-line:#8DA2F5;
   --shadow:rgba(0,0,0,.4); color-scheme:dark}
 
 .t-early{--c:var(--early);--soft:var(--early-soft);--dark:var(--early-dark)}
@@ -278,43 +281,65 @@ footer b{color:var(--ink-fg)}
 .how p{font-size:14px;color:var(--muted)}
 .ask{background:var(--early-soft);border-radius:28px;padding:40px;display:grid;gap:24px;justify-items:start}
 .ask .sec-h{margin:0}
-.ask-l{list-style:none;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;width:100%}
+.ask-l{list-style:none;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;width:100%}
 .ask-l li{background:var(--surface);border-radius:16px;padding:16px 18px;display:grid;gap:2px}
 .ask-l b{font-size:16px}
 .ask-l span{font-size:14px;color:var(--muted)}
 
-/* 맞춤 프로그램 입력 */
+/* 맞춤 프로그램 입력: 전체 화면 질문 카드 (레퍼런스: 질문 앱 온보딩) */
 .btn:disabled{opacity:.4;cursor:not-allowed;transform:none;box-shadow:none}
-.qz-wrap{padding-block:40px 80px}
-.qz{max-width:640px;margin:0 auto;background:var(--surface);border:1px solid var(--line);border-radius:28px;padding:36px;display:grid;gap:14px;scroll-margin-top:120px}
-.qz-top{display:flex;align-items:center;gap:14px;font-size:14px;font-weight:700;color:var(--muted);font-variant-numeric:tabular-nums}
-.qz-bar{flex:1;height:8px;border-radius:999px;background:var(--tint);overflow:hidden}
-.qz-bar i{display:block;height:100%;background:var(--early);border-radius:999px;transition:width .4s cubic-bezier(.2,.7,.2,1)}
-.qz h1{font-size:clamp(1.6rem,4.4vw,2.1rem);margin-top:10px}
-.qz-sub{color:var(--muted)}
-.qz-body{display:grid;gap:12px;margin-top:10px}
-.qz-lbl{font-size:14px;font-weight:700;color:var(--muted);margin-top:6px}
-.qz-hint{font-size:15px;color:var(--muted)}
-.qz-hint b{color:var(--early-dark)}
-.qz-nav{display:flex;justify-content:space-between;gap:12px;margin-top:14px}
+body.quiz-mode .top,body.quiz-mode footer{display:none}
+.qz-page{min-height:100vh;min-height:100svh;background:linear-gradient(180deg,var(--qz-bg1) 0%,var(--qz-bg1) 55%,var(--qz-bg2) 100%);display:flex;flex-direction:column;padding-bottom:calc(84px + env(safe-area-inset-bottom,0px))}
+.qz-head{display:flex;align-items:center;gap:16px;padding:14px max(16px,env(safe-area-inset-left,0px)) 6px;max-width:640px;width:100%;margin:0 auto}
+.qz-head b{font-size:17px}
+.qz-cancel{background:var(--surface);border:0;border-radius:999px;padding:0 18px;min-height:40px;font-size:15px;font-weight:500;box-shadow:0 2px 8px var(--shadow)}
+.qz-stage{position:relative;flex:1;display:flex;align-items:center;justify-content:center;padding:14px 28px 24px;overflow:hidden}
+.qz-stage::before,.qz-stage::after{content:"";position:absolute;top:44px;bottom:52px;width:min(520px,calc(100% - 56px));background:var(--surface);opacity:.55;border-radius:10px}
+.qz-stage::before{right:calc(50% + min(260px,calc(50% - 28px)) + 10px)}
+.qz-stage::after{left:calc(50% + min(260px,calc(50% - 28px)) + 10px)}
+.qz{position:relative;z-index:1;width:100%;max-width:520px;min-height:min(560px,calc(100svh - 190px));background:var(--surface);border-radius:10px;box-shadow:0 10px 30px var(--shadow);padding:44px 24px 28px;display:flex;flex-direction:column;justify-content:center;gap:6px}
+.qz.in-r{animation:qzR .38s cubic-bezier(.2,.7,.2,1) both}
+.qz.in-l{animation:qzL .38s cubic-bezier(.2,.7,.2,1) both}
+@keyframes qzR{from{opacity:0;transform:translateX(56px)}to{opacity:1;transform:none}}
+@keyframes qzL{from{opacity:0;transform:translateX(-56px)}to{opacity:1;transform:none}}
+.qz h1{font-family:var(--body);font-size:22px;font-weight:500;text-align:center}
+.qz .req{font-style:normal;color:var(--qz-bar);margin-left:4px}
+.qz-sub{text-align:center;color:var(--muted);font-size:16px;max-width:24em;margin:0 auto}
+.qz-body{display:grid;gap:10px;margin-top:20px}
+.qz-lbl{font-size:14px;font-weight:700;color:var(--muted);margin-top:8px}
+.qz-hint{font-size:14px;color:var(--muted);text-align:center}
+.qz-hint b{color:var(--fg)}
 .opts{display:grid;gap:10px}
-.opts.row{grid-template-columns:repeat(3,minmax(0,1fr))}
-.opt{text-align:left;background:var(--bg);border:2px solid var(--line);border-radius:16px;padding:14px 18px;display:grid;gap:2px;min-height:56px;transition:border-color .2s,background .2s}
+.opt{text-align:left;background:var(--surface);border:1px solid var(--qz-line);border-radius:6px;padding:12px 14px;display:flex;gap:12px;align-items:flex-start;min-height:48px;transition:background .15s,border-color .15s}
 .opt:hover{border-color:var(--muted)}
-.opt.on{border-color:var(--early);background:var(--early-soft)}
-.opt b{font-size:16px}
-.opt span{font-size:14px;color:var(--muted)}
-.opts.row .opt{text-align:center;justify-items:center;padding:12px 8px}
-.fld{display:grid;gap:6px;font-size:14px;font-weight:700;color:var(--muted)}
-.fld input{font:inherit;font-size:18px;font-weight:500;color:var(--fg);background:var(--bg);border:2px solid var(--line);border-radius:14px;padding:12px 14px;min-height:54px;width:100%;min-width:0}
-.fld input:focus{outline:none;border-color:var(--early)}
+.opt.on{background:var(--qz-sel);border-color:var(--qz-sel-line)}
+.opt b{font-size:16px;font-weight:500;display:block}
+.opt small{display:block;font-size:14px;color:var(--muted);margin-top:2px}
+.mk{flex:none;width:20px;height:20px;margin-top:1px;border-radius:50%;border:1.5px solid var(--muted);display:grid;place-items:center;background:var(--surface)}
+.opt.on .mk{border-color:var(--qz-sel-line)}
+.opt.on .mk::after{content:"";width:10px;height:10px;border-radius:50%;background:var(--qz-sel-line)}
+.opt.ck .mk{border-radius:4px}
+.opt.ck.on .mk{background:var(--qz-sel-line)}
+.opt.ck.on .mk::after{width:5px;height:10px;border-radius:0;background:none;border:solid var(--surface);border-width:0 2px 2px 0;transform:translate(0,-1px) rotate(45deg)}
+.fld{display:grid;gap:4px;font-size:13px;color:var(--muted)}
+.fld input{font:inherit;font-size:17px;color:var(--fg);background:var(--surface);border:1px solid var(--qz-line);border-radius:6px;padding:10px 12px;min-height:50px;width:100%;min-width:0}
+.fld input:focus{outline:none;border:2px solid var(--qz-sel-line);padding:9px 11px}
 .fld2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
 .unit{position:relative;display:block}
-.unit i{position:absolute;right:16px;top:50%;transform:translateY(-50%);font-style:normal;color:var(--muted);font-weight:500;pointer-events:none}
-.unit input{padding-right:48px}
+.unit i{position:absolute;right:14px;top:50%;transform:translateY(-50%);font-style:normal;color:var(--muted);pointer-events:none}
+.unit input{padding-right:44px}
 .chips2{display:flex;flex-wrap:wrap;gap:8px}
-.chip{background:var(--bg);border:1px solid var(--line);border-radius:999px;padding:0 16px;min-height:40px;font-size:15px;font-weight:500}
-.chip.on{background:var(--fg);color:var(--bg);border-color:var(--fg)}
+.chip{background:var(--surface);border:1px solid var(--qz-line);border-radius:999px;padding:0 14px;min-height:38px;font-size:15px}
+.chip.on{background:var(--qz-sel);border-color:var(--qz-sel-line);font-weight:700}
+.qz-foot{position:fixed;left:0;right:0;bottom:0;z-index:40;background:var(--qz-bar);color:#fff;padding-bottom:env(safe-area-inset-bottom,0px)}
+.qz-foot-in{max-width:640px;margin:0 auto;height:72px;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:0 10px}
+.qz-arrow{background:none;border:0;color:#fff;min-width:56px;min-height:56px;display:grid;place-items:center;border-radius:12px;font-size:16px;font-weight:700}
+.qz-arrow:hover{background:rgba(255,255,255,.14)}
+.qz-arrow:disabled{opacity:.35;cursor:default;background:none}
+.qz-arrow.done{background:#fff;color:var(--qz-bar-dark);padding:0 18px;min-height:46px;border-radius:999px}
+.qz-arrow.done:disabled{background:rgba(255,255,255,.5)}
+.qz-count{background:var(--qz-bar-dark);border-radius:8px;padding:10px 26px;font-size:16px;font-variant-numeric:tabular-nums;color:rgba(255,255,255,.9)}
+.qz-arrow:focus-visible{outline-color:#fff}
 
 /* 맞춤 프로그램 결과 */
 .ov dd .sub{font-weight:500}
@@ -361,8 +386,7 @@ footer b{color:var(--ink-fg)}
   .g2,.bal,.ask-l{grid-template-columns:minmax(0,1fr)}
   .wkg{grid-template-columns:minmax(0,1fr)}
   .wd{grid-template-columns:2.2em minmax(0,1fr) auto;align-items:center;padding:12px 14px}
-  .opts.row .opt{padding:12px 4px}
-  .stop,.ask,.qz{padding:22px}
+  .stop,.ask{padding:22px}
   .seg span{display:none}
   .wk{font-size:52px}
   .subnav{position:static}
@@ -585,8 +609,8 @@ function homeHTML(){
       <ul>${li(p.points)}</ul>
       <span class="go">운동 ${countOf(id)}가지 보기${ARROW}</span>
     </button>`; }).join('');
-  const steps = [['출산예정일, 키·몸무게, 체력, 운동 습관을 알려주세요','6개 질문 · 1분'],['지금 주수와 체력에 맞춰 강도와 운동을 골라요','초기 · 중기 · 후기 × 3단계'],['요일별 계획과 허리 운동 루틴을 따라 해요','저장·인쇄 가능']];
-  const asks = [['출산 예정일','지금 주수와 시기 계산'],['키 · 몸무게','관절 부담과 강도 참고'],['현재 체력','걷기, 빠르게 걷기, 조깅 가능 여부'],['운동 빈도 · 시간','일주일 몇 번, 한 번에 몇 분'],['운동 경험','처음인지, 꾸준히 해 왔는지'],['안전 확인','운동 제한을 들은 적이 있는지']];
+  const steps = [['출산예정일, 목표, 체력, 운동 가능한 요일을 알려주세요','8개 질문 · 1분'],['지금 주수와 체력에 맞춰 강도와 운동을 골라요','초기 · 중기 · 후기 × 3단계'],['요일별 계획과 허리 운동 루틴을 따라 해요','저장·인쇄 가능']];
+  const asks = [['출산 예정일','지금 주수와 시기 계산'],['운동 목표','허리·골반 통증, 골반저근, 순산 준비 등'],['키 · 몸무게','관절 부담과 강도 참고'],['활동 수준','걷기, 빠르게 걷기, 조깅 가능 여부'],['운동 가능한 요일','고른 요일로 주간 계획 구성'],['한 번에 운동할 시간','15분, 20–30분, 40분 이상'],['운동 경험','처음인지, 꾸준히 해 왔는지'],['안전 확인','운동 제한을 들은 적이 있는지']];
   return `<div class="view-in"><div class="wrap">
   <section class="hero">
     <div>
@@ -614,7 +638,7 @@ function homeHTML(){
 
   <section class="sec">
     <div class="ask rv">
-      <div class="sec-h"><p class="eyebrow">무엇을 물어보나요</p><h2 class="disp">여섯 가지 정보로 강도와 운동을 정해요</h2><p>같은 주수라도 체력과 운동 경험에 따라 맞는 운동이 달라요.</p></div>
+      <div class="sec-h"><p class="eyebrow">무엇을 물어보나요</p><h2 class="disp">여덟 가지 질문으로 강도와 운동을 정해요</h2><p>같은 주수라도 체력과 운동 경험에 따라 맞는 운동이 달라요.</p></div>
       <ul class="ask-l">${asks.map(a=>`<li><b>${a[0]}</b><span>${a[1]}</span></li>`).join('')}</ul>
       <button class="btn pri" type="button" data-go="plan">지금 시작하기${ARROW}</button>
     </div>
@@ -800,20 +824,21 @@ function progHTML(id){
 }
 
 /* ---------- 맞춤 프로그램: 정보 입력 → 운동 계획 ---------- */
-const PLAN_KEY = 'mh-plan-v1';
-let plan = {due:'',h:'',w:'',fit:'',freq:'',dur:'',exp:'',kinds:[],med:''};
+const PLAN_KEY = 'mh-plan-v2';
+let plan = {due:'',goals:[],h:'',w:'',fit:'',days:[],dur:'',exp:'',kinds:[],med:''};
 try { const s = JSON.parse(localStorage.getItem(PLAN_KEY) || 'null'); if(s) plan = Object.assign(plan, s); } catch(_){}
 const savePlan = () => { try { localStorage.setItem(PLAN_KEY, JSON.stringify(plan)); } catch(_){} };
-let qStep = 0, qDone = false;
+let qStep = 0, qDone = false, qDir = 1;
 
-const FIT = [['low','10분만 걸어도 힘들어요','숨이 쉽게 차고 자주 쉬어야 해요'],['walk','30분 걷기는 괜찮아요','편한 속도라면 무리 없어요'],['brisk','빠르게 걷기·계단도 괜찮아요','조금 숨차도 대화는 할 수 있어요'],['jog','가벼운 조깅도 할 수 있어요','요즘도 달리기를 하고 있어요']];
-const FREQ = [['1','주 1–2회'],['3','주 3–4회'],['5','주 5회 이상']];
-const DUR = [['15','15분 정도'],['25','20–30분'],['40','40분 이상']];
+const GOALS = ['허리 통증 줄이기','골반 통증 줄이기','골반저근 강화','체력 유지','순산 준비','자세 바로잡기','체중 관리','숙면·스트레스 관리'];
+const FIT = [['low','거의 앉아서 지내요','주로 앉아 있거나 누워 있어요. 10분만 걸어도 힘들어요.'],['walk','가볍게 움직여요','집안일이나 천천히 걷기 정도. 30분 걷기는 괜찮아요.'],['brisk','적당히 활동해요','빠르게 걷기, 계단 오르기, 가벼운 자전거도 괜찮아요.'],['jog','활발하게 운동해요','가벼운 조깅이나 에어로빅처럼 숨찬 운동도 해요.']];
+const DUR = [['15','15분 정도','짧고 가볍게'],['25','20–30분','권장 시간'],['40','40분 이상','허리 운동 + 걷기']];
 const EXP = [['none','거의 없어요','규칙적으로 운동한 적이 없어요'],['some','가끔 했어요','주 1–2회 정도, 띄엄띄엄'],['regular','꾸준히 했어요','임신 전 주 3회 이상']];
 const KINDS = ['걷기','요가·필라테스','근력 운동','달리기','수영','기타'];
 const MED = [['no','아니요, 들은 적 없어요'],['unsure','잘 모르겠어요'],['yes','네, 들은 적 있어요']];
 const LV = {1:{name:'입문',rpe:'RPE 11–12',talk:'노래를 부를 수 있을 만큼 편하게'},2:{name:'기본',rpe:'RPE 12–13',talk:'대화를 편하게 할 수 있는 정도'},3:{name:'활동',rpe:'RPE 13–14',talk:'조금 숨차지만 대화는 되는 정도'}};
 const DAYS = ['월','화','수','목','금','토','일'];
+const DAYS_L = ['월요일','화요일','수요일','목요일','금요일','토요일','일요일'];
 const esc = s => String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 
 function gaOf(due){
@@ -835,50 +860,77 @@ const bodyOk = () => +plan.h >= 130 && +plan.h <= 200 && +plan.w >= 35 && +plan.
 const bmiOf = () => +plan.w / Math.pow(+plan.h / 100, 2);
 const bmiMsg = () => bodyOk() ? `BMI ${bmiOf().toFixed(1)} · 참고용이에요. 임신 중 체중이 느는 건 자연스러운 일이에요.` : '키는 130–200cm, 몸무게는 35–180kg 사이로 입력해 주세요.';
 
-const opts = (key, list, row) => `<div class="opts${row ? ' row' : ''}" role="radiogroup">${list.map(o =>
-  `<button type="button" class="opt${plan[key] === o[0] ? ' on' : ''}" role="radio" aria-checked="${plan[key] === o[0]}" data-k="${key}" data-v="${o[0]}"><b>${o[1]}</b>${o[2] ? `<span>${o[2]}</span>` : ''}</button>`).join('')}</div>`;
+/* 선택지: 한 개 고르기(라디오) / 여러 개 고르기(체크) */
+const radio = (key, list) => `<div class="opts" role="radiogroup">${list.map(o => { const on = plan[key] === o[0]; return `
+  <button type="button" class="opt${on ? ' on' : ''}" role="radio" aria-checked="${on}" data-k="${key}" data-v="${o[0]}"><i class="mk"></i><span><b>${o[1]}</b>${o[2] ? `<small>${o[2]}</small>` : ''}</span></button>`; }).join('')}</div>`;
+const checks = (key, list) => `<div class="opts">${list.map(o => { const v = Array.isArray(o) ? o[0] : o, t = Array.isArray(o) ? o[1] : o, on = plan[key].includes(v); return `
+  <button type="button" class="opt ck${on ? ' on' : ''}" role="checkbox" aria-checked="${on}" data-m="${key}" data-v="${v}"><i class="mk"></i><span><b>${t}</b></span></button>`; }).join('')}</div>`;
 
 const STEPS = [
- {t:'출산 예정일이 언제인가요?', s:'예정일로 지금 임신 몇 주인지 계산해요.', html:() => `
-   <label class="fld"><span>출산 예정일</span><input type="date" data-f="due" value="${esc(plan.due)}"></label>
+ {t:'출산 예정일', s:'출산 예정일이 언제인가요?', html:() => `
+   <label class="fld"><input type="date" data-f="due" value="${esc(plan.due)}" aria-label="출산 예정일"><span>날짜</span></label>
    <p class="qz-hint" id="qz-live">${dueMsg()}</p>`, ok:dueOk},
- {t:'키와 몸무게를 알려주세요', s:'운동 강도와 관절 부담을 정할 때 참고해요.', html:() => `
+ {t:'운동 목표', s:'이번 임신 기간에 가장 바라는 것을 골라주세요. 여러 개 골라도 돼요.', html:() => checks('goals', GOALS), ok:() => plan.goals.length > 0},
+ {t:'키 · 몸무게', s:'운동 강도와 관절 부담을 정할 때 참고해요.', html:() => `
    <div class="fld2">
-    <label class="fld"><span>키</span><span class="unit"><input type="number" inputmode="decimal" min="130" max="200" data-f="h" value="${esc(plan.h)}" placeholder="160"><i>cm</i></span></label>
-    <label class="fld"><span>현재 몸무게</span><span class="unit"><input type="number" inputmode="decimal" min="35" max="180" data-f="w" value="${esc(plan.w)}" placeholder="60"><i>kg</i></span></label>
+    <label class="fld"><span class="unit"><input type="number" inputmode="decimal" min="130" max="200" data-f="h" value="${esc(plan.h)}" placeholder="160" aria-label="키"><i>cm</i></span><span>키</span></label>
+    <label class="fld"><span class="unit"><input type="number" inputmode="decimal" min="35" max="180" data-f="w" value="${esc(plan.w)}" placeholder="60" aria-label="현재 몸무게"><i>kg</i></span><span>현재 몸무게</span></label>
    </div>
    <p class="qz-hint" id="qz-live">${bmiMsg()}</p>`, ok:bodyOk},
- {t:'지금 체력은 어느 정도인가요?', s:'요즘 컨디션에 가장 가까운 것을 골라주세요.', html:() => opts('fit', FIT), ok:() => !!plan.fit},
- {t:'일주일에 얼마나 운동할 수 있나요?', s:'무리 없이 지킬 수 있는 만큼 골라주세요.', html:() => `<p class="qz-lbl">횟수</p>${opts('freq', FREQ, 1)}<p class="qz-lbl">한 번에</p>${opts('dur', DUR, 1)}`, ok:() => !!(plan.freq && plan.dur)},
- {t:'운동 경험이 있나요?', s:'임신 전을 포함해서 알려주세요.', html:() => `${opts('exp', EXP)}<p class="qz-lbl">해 본 운동 (선택)</p><div class="chips2">${KINDS.map(k => `<button type="button" class="chip${plan.kinds.includes(k) ? ' on' : ''}" aria-pressed="${plan.kinds.includes(k)}" data-kind="${k}">${k}</button>`).join('')}</div>`, ok:() => !!plan.exp},
- {t:'마지막으로 확인할게요', s:'담당 의사에게 임신 중 운동을 제한하라는 말을 들은 적이 있나요?', html:() => opts('med', MED) + `<p class="qz-hint">전치태반, 조기 진통 위험, 자궁경부 무력증, 임신성 고혈압 등이 있다면 운동 전에 꼭 상담이 필요해요.</p>`, ok:() => !!plan.med}
+ {t:'활동 수준', s:'요즘 일주일 동안 얼마나 움직이나요?', html:() => radio('fit', FIT), ok:() => !!plan.fit},
+ {t:'운동 가능한 요일', s:'허리 운동이나 걷기를 할 수 있는 요일을 모두 골라주세요.', html:() => checks('days', DAYS_L.map((d, i) => [String(i), d])), ok:() => plan.days.length > 0},
+ {t:'한 번에 운동할 시간', s:'하루에 운동할 수 있는 시간은 어느 정도인가요?', html:() => radio('dur', DUR), ok:() => !!plan.dur},
+ {t:'운동 경험', s:'임신 전을 포함해서 알려주세요.', html:() => `${radio('exp', EXP)}<p class="qz-lbl">해 본 운동 (선택)</p><div class="chips2">${KINDS.map(k => `<button type="button" class="chip${plan.kinds.includes(k) ? ' on' : ''}" aria-pressed="${plan.kinds.includes(k)}" data-m="kinds" data-v="${k}">${k}</button>`).join('')}</div>`, ok:() => !!plan.exp},
+ {t:'안전 확인', s:'담당 의사에게 임신 중 운동을 제한하라는 말을 들은 적이 있나요?', html:() => radio('med', MED) + `<p class="qz-hint">전치태반, 조기 진통 위험, 자궁경부 무력증, 임신성 고혈압 등이 있다면 운동 전에 꼭 상담이 필요해요.</p>`, ok:() => !!plan.med}
 ];
 
 function planHTML(){
-  return `<section class="qz-wrap"><div class="wrap"><div class="qz" id="qz"></div></div></section>`;
+  return `<div class="qz-page">
+   <div class="qz-head"><button type="button" class="qz-cancel" data-go="home">취소</button><b>맞춤 프로그램 만들기</b></div>
+   <div class="qz-stage"><div class="qz" id="qz"></div></div>
+   <div class="qz-foot"><div class="qz-foot-in">
+    <button type="button" class="qz-arrow" data-qz="prev" aria-label="이전 질문"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M15 5l-7 7 7 7"></path></svg></button>
+    <span class="qz-count" id="qz-count"></span>
+    <button type="button" class="qz-arrow nx" data-qz="next" aria-label="다음 질문"></button>
+   </div></div>
+  </div>`;
 }
 function renderPlan(){
   if(qDone && !STEPS.every(s => s.ok())) qDone = false;
+  document.body.classList.toggle('quiz-mode', !qDone);
   app.innerHTML = qDone ? resultHTML() : planHTML();
   if(!qDone) renderQ();
   window.scrollTo(0, 0);
 }
-function renderQ(){
+function renderQ(anim){
   const box = document.getElementById('qz'); if(!box) return;
-  const s = STEPS[qStep];
-  box.innerHTML = `
-   <div class="qz-top"><span>${qStep + 1} / ${STEPS.length}</span><div class="qz-bar"><i style="width:${(qStep + 1) / STEPS.length * 100}%"></i></div></div>
-   <h1 class="disp">${s.t}</h1><p class="qz-sub">${s.s}</p>
-   <div class="qz-body">${s.html()}</div>
-   <div class="qz-nav">
-    ${qStep ? `<button type="button" class="btn sec" data-qz="prev">이전</button>` : '<span></span>'}
-    <button type="button" class="btn pri" data-qz="next" ${s.ok() ? '' : 'disabled'}>${qStep === STEPS.length - 1 ? '내 프로그램 보기' : '다음'}${ARROW}</button>
-   </div>`;
+  const s = STEPS[qStep], last = qStep === STEPS.length - 1;
+  box.innerHTML = `<h1>${s.t}<i class="req" aria-hidden="true">*</i></h1><p class="qz-sub">${s.s}</p><div class="qz-body">${s.html()}</div>`;
+  if(anim && !reduce){ box.classList.remove('in-l','in-r'); void box.offsetWidth; box.classList.add(qDir > 0 ? 'in-r' : 'in-l'); }
+  document.getElementById('qz-count').textContent = `${qStep + 1} / ${STEPS.length}`;
+  document.querySelector('[data-qz="prev"]').disabled = qStep === 0;
+  const nx = document.querySelector('[data-qz="next"]');
+  nx.innerHTML = last ? '결과 보기' : '<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M9 5l7 7-7 7"></path></svg>';
+  nx.classList.toggle('done', last); nx.disabled = !s.ok();
 }
 function refreshQ(){
-  const s = STEPS[qStep], live = document.getElementById('qz-live');
+  const live = document.getElementById('qz-live');
   if(live) live.innerHTML = qStep === 0 ? dueMsg() : bmiMsg();
-  const nx = document.querySelector('[data-qz="next"]'); if(nx) nx.disabled = !s.ok();
+  const nx = document.querySelector('[data-qz="next"]'); if(nx) nx.disabled = !STEPS[qStep].ok();
+}
+function qGo(dir){
+  if(dir > 0 && !STEPS[qStep].ok()) return;
+  if(dir > 0 && qStep === STEPS.length - 1){ qDone = true; renderPlan(); return; }
+  const n = qStep + dir; if(n < 0 || n >= STEPS.length) return;
+  qDir = dir; qStep = n; renderQ(true); window.scrollTo(0, 0);
+}
+
+/* 고른 요일 중 허리 운동 날은 최대 3일, 하루씩 띄워서 고르고 나머지는 걷기·유산소 */
+function pickCore(days){
+  const ds = days.map(Number).sort((a, b) => a - b), core = [];
+  ds.forEach(d => { if(core.length < 3 && !core.some(c => Math.abs(c - d) === 1)) core.push(d); });
+  ds.forEach(d => { if(core.length < Math.min(3, ds.length) && !core.includes(d)) core.push(d); });
+  return {ds, core};
 }
 
 function buildPlan(){
@@ -892,14 +944,14 @@ function buildPlan(){
   let cardio = {low:'천천히 걷기', walk:'편한 속도로 걷기', brisk:'빠르게 걷기·실내 자전거', jog:'빠르게 걷기·실내 자전거'}[plan.fit];
   if(plan.fit === 'jog' && plan.exp === 'regular' && tri !== 'late') cardio = '가벼운 조깅 또는 빠르게 걷기';
   if(plan.kinds.includes('수영')) cardio += ' · 수영';
-  const lay = {1:{core:[1,5], cardio:[], rest:[]}, 3:{core:[0,2,4], cardio:[5], rest:[6]}, 5:{core:[0,2,4], cardio:[1,3,5], rest:[6]}}[plan.freq];
+  const {ds, core} = pickCore(plan.days);
   const week = DAYS.map((d, i) => {
-    if(lay.core.includes(i)) return {d, k:'core', t:limited ? '호흡·스트레칭' : '허리 운동', m:limited ? '10분' : `${coreMin}분${plan.dur === '40' ? ' + 걷기 10분' : ''}`};
-    if(lay.cardio.includes(i) && !limited) return {d, k:'cardio', t:cardio, m:cardioTxt};
-    if(lay.rest.includes(i)) return {d, k:'rest', t:'쉬기', m:''};
-    return {d, k:'light', t:'가볍게 움직이기', m:'스트레칭 5분'};
+    if(core.includes(i)) return {d, k:'core', t:limited ? '호흡·스트레칭' : '허리 운동', m:limited ? '10분' : `${coreMin}분${plan.dur === '40' ? ' + 걷기 10분' : ''}`};
+    if(ds.includes(i)) return limited ? {d, k:'light', t:'가볍게 움직이기', m:'스트레칭 5분'} : {d, k:'cardio', t:cardio, m:cardioTxt};
+    return {d, k:'light', t:'쉬기', m:'가벼운 스트레칭 5분'};
   });
-  const total = limited ? 0 : lay.core.length * (coreMin + (plan.dur === '40' ? 10 : 0)) + lay.cardio.length * cardioMin;
+  const nCardio = ds.length - core.length;
+  const total = limited ? 0 : core.length * (coreMin + (plan.dur === '40' ? 10 : 0)) + nCardio * cardioMin;
   const cut = {15:[2,2,2], 25:[3,4,3], 40:[3,99,3]}[plan.dur];
   const phases = P.phases.map((ph, i) => ({name:ph.name, items:ph.items.slice(0, cut[i])})).filter((ph, i) => !limited || i !== 1);
   const notes = [];
@@ -909,7 +961,10 @@ function buildPlan(){
   if(bmi < 18.5) notes.push('체중이 적게 늘 수 있어요. 운동량을 늘리기 전에 식사와 체중 변화를 담당 의사와 확인해요.');
   if(plan.exp === 'none') notes.push('운동이 처음이라면 쉬운 단계부터 시작하고, 다음 날 통증과 피로를 확인하며 늘려요.');
   if(plan.fit === 'jog' && tri === 'late') notes.push('후기에는 달리기 대신 빠르게 걷기나 수중 운동으로 바꾸는 것을 권해요.');
-  if(plan.freq === '1') notes.push('운동하지 않는 날에도 10분씩 걷기처럼 가볍게 움직이면 허리 부담을 덜 수 있어요.');
+  if(ds.length <= 2) notes.push('운동하지 않는 날에도 10분씩 걷기처럼 가볍게 움직이면 허리 부담을 덜 수 있어요.');
+  if(plan.goals.includes('골반저근 강화')) notes.push('골반저근 강화가 목표라면 운동하지 않는 날에도 케겔(5초 조이기 · 5초 풀기 × 10회)을 하루 2–3번 해요.');
+  if(plan.goals.includes('순산 준비') && tri === 'late') notes.push('순산 준비가 목표라면 정리운동의 출산 호흡과 골반저근 이완 호흡을 매일 해 보세요.');
+  if(plan.goals.includes('숙면·스트레스 관리')) notes.push('잠들기 전 복식 호흡을 5분 해 보세요. 긴장이 풀리고 잠드는 데 도움이 돼요.');
   notes.push(...P.warn.slice(0, 2));
   return {g, tri, P, lv, limited, week, total, phases, notes, coreMin};
 }
@@ -924,6 +979,7 @@ function resultHTML(){
    <p class="eyebrow a1">나의 맞춤 프로그램</p>
    <h1 class="disp a2">${r.P.kicker} · ${L.name} 단계</h1>
    <p class="lead a3">${r.g.wk}주 ${r.g.d}일${r.g.left > 0 ? `, 출산까지 ${r.g.left}일` : ''}. 체력과 운동 습관에 맞춰 이번 주 운동 계획을 만들었어요.</p>
+   <div class="goal-chips a3">${plan.goals.map(x => `<span>${x}</span>`).join('')}</div>
    <dl class="ov a4">
     <div><dt>강도</dt><dd>${L.rpe}<span class="sub">${L.talk}</span></dd></div>
     <div><dt>허리 운동</dt><dd>${r.limited ? '호흡·스트레칭 10분' : `1회 ${r.coreMin}분`}</dd></div>
@@ -983,6 +1039,7 @@ function countUp(){
 
 function show(id){
   if(!PAGES[id] && !PROGS[id] && id !== 'plan') id = 'home';
+  document.body.classList.remove('quiz-mode');
   nav.innerHTML = NAV.map(n => `<button type="button" class="pill${n[0]===id?' on':''}" data-go="${n[0]}"${n[0]===id?' aria-current="page"':''}>${n[1]}</button>`).join('');
   siteLinks.forEach(a => a.dataset.go === id ? a.setAttribute('aria-current','page') : a.removeAttribute('aria-current'));
   if(id === 'home'){
@@ -1008,13 +1065,13 @@ document.addEventListener('click', e => {
   if(s){ document.getElementById(s.dataset.scroll)?.scrollIntoView({behavior: reduce ? 'auto' : 'smooth', block:'center'}); return; }
   const o = e.target.closest('[data-k]');
   if(o){ plan[o.dataset.k] = o.dataset.v; savePlan(); renderQ(); return; }
-  const kd = e.target.closest('[data-kind]');
-  if(kd){ const v = kd.dataset.kind; plan.kinds = plan.kinds.includes(v) ? plan.kinds.filter(x => x !== v) : plan.kinds.concat(v); savePlan(); renderQ(); return; }
+  const m = e.target.closest('[data-m]');
+  if(m){ const key = m.dataset.m, v = m.dataset.v; plan[key] = plan[key].includes(v) ? plan[key].filter(x => x !== v) : plan[key].concat(v); savePlan(); renderQ(); return; }
   const q = e.target.closest('[data-qz]');
   if(q){
     const a = q.dataset.qz;
-    if(a === 'prev'){ qStep = Math.max(0, qStep - 1); renderQ(); }
-    else if(a === 'next'){ if(!STEPS[qStep].ok()) return; if(qStep === STEPS.length - 1){ qDone = true; renderPlan(); } else { qStep++; renderQ(); } window.scrollTo(0, 0); }
+    if(a === 'prev') qGo(-1);
+    else if(a === 'next') qGo(1);
     else if(a === 'edit'){ qDone = false; qStep = 0; renderPlan(); }
     return;
   }
@@ -1025,6 +1082,7 @@ document.addEventListener('click', e => {
   else if(location.hash === '#' + id) show(id);
   else location.hash = id;
 });
+document.addEventListener('keydown', e => { if(e.key === 'Enter' && e.target.dataset && e.target.dataset.f){ e.preventDefault(); qGo(1); } });
 document.addEventListener('input', e => {
   const f = e.target.dataset && e.target.dataset.f; if(!f) return;
   plan[f] = e.target.value.trim(); savePlan(); refreshQ();

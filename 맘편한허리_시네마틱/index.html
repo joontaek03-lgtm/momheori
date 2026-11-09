@@ -20,7 +20,7 @@
   --late:#4F5BA8; --late-soft:#E3E6F7; --late-dark:#3A4486;
   --danger:#B4473A; --danger-soft:#F8E0DB; --danger-dark:#8E2F24; --danger-line:#F0C9C1;
   --shadow:rgba(31,42,40,.12);
-  --qz-bg1:#EEE8F8; --qz-bg2:#F9DDEB; --qz-bar:#E8458B; --qz-bar-dark:#C42F6F; --qz-line:#CFC8D6; --qz-sel:#E4ECFF; --qz-sel-line:#5B7FE8;
+  --qz-bg1:#FBF8F4; --qz-bg2:#DCEEE7; --qz-bar:#2E7A6A; --qz-bar-dark:#1F5A4E; --qz-line:#D9D2C8; --qz-sel:#DCEEE7; --qz-sel-line:#2E7A6A;
   --display:"Gowun Batang","Nanum Myeongjo",serif;
   --body:"Noto Sans KR","Apple SD Gothic Neo","Malgun Gothic",system-ui,sans-serif;
 }
@@ -32,7 +32,7 @@
   --mid:#E38A66; --mid-soft:#3A251C; --mid-dark:#F4B297;
   --late:#909AE2; --late-soft:#252A47; --late-dark:#BAC1F2;
   --danger:#F08A7C; --danger-soft:#3D2220; --danger-dark:#F6ADA2; --danger-line:#5A2E2A;
-  --qz-bg1:#1C1824; --qz-bg2:#2C1A27; --qz-bar:#C2386F; --qz-bar-dark:#97295A; --qz-line:#3E3848; --qz-sel:#232C47; --qz-sel-line:#8DA2F5;
+  --qz-bg1:#131A19; --qz-bg2:#1C3530; --qz-bar:#24584D; --qz-bar-dark:#173D35; --qz-line:#3A4644; --qz-sel:#1C3530; --qz-sel-line:#5FBFA9;
   --shadow:rgba(0,0,0,.4); color-scheme:dark}}
 :root[data-theme="dark"]{
   --bg:#131A19; --surface:#1B2422; --fg:#E8EEEC; --muted:#A3B2AE; --line:#2C3836; --hover:#25302E; --tint:#222C2A;
@@ -42,7 +42,7 @@
   --mid:#E38A66; --mid-soft:#3A251C; --mid-dark:#F4B297;
   --late:#909AE2; --late-soft:#252A47; --late-dark:#BAC1F2;
   --danger:#F08A7C; --danger-soft:#3D2220; --danger-dark:#F6ADA2; --danger-line:#5A2E2A;
-  --qz-bg1:#1C1824; --qz-bg2:#2C1A27; --qz-bar:#C2386F; --qz-bar-dark:#97295A; --qz-line:#3E3848; --qz-sel:#232C47; --qz-sel-line:#8DA2F5;
+  --qz-bg1:#131A19; --qz-bg2:#1C3530; --qz-bar:#24584D; --qz-bar-dark:#173D35; --qz-line:#3A4644; --qz-sel:#1C3530; --qz-sel-line:#5FBFA9;
   --shadow:rgba(0,0,0,.4); color-scheme:dark}
 
 .t-early{--c:var(--early);--soft:var(--early-soft);--dark:var(--early-dark)}
@@ -246,7 +246,9 @@ footer b{color:var(--ink-fg)}
 .ex-no{flex:none;width:44px;height:44px;border-radius:14px;color:var(--on-c);background:var(--c);display:grid;place-items:center;font-weight:900;font-size:17px;font-variant-numeric:tabular-nums}
 .ex-goal{font-size:13px;font-weight:700;color:var(--dark)}
 .ex h3{font-size:21px}
-.ex-media{aspect-ratio:16/9;max-width:100%;border-radius:14px;display:grid;place-items:center;font-size:14px;font-weight:500;color:var(--dark);background:var(--soft)}
+.ex-media,.rx-img{margin:0;aspect-ratio:16/9;max-width:100%;border-radius:14px;overflow:hidden;display:grid;place-items:center;background:var(--soft)}
+.ex-media img,.rx-img img{width:100%;height:100%;object-fit:cover;display:block}
+.ex-media.empty,.rx-img.empty{border:1.5px dashed var(--c,var(--early));color:var(--dark);place-content:center;gap:6px;justify-items:center;font-size:13px;font-weight:700;opacity:.85}
 .ex-meta{display:flex;flex-wrap:wrap;gap:8px}
 .ex-meta span{font-size:14px;font-weight:500;padding:5px 12px;border-radius:10px;background:var(--tint)}
 .steps{list-style:none;display:grid;gap:10px}
@@ -286,7 +288,7 @@ footer b{color:var(--ink-fg)}
 .ask-l b{font-size:16px}
 .ask-l span{font-size:14px;color:var(--muted)}
 
-/* 맞춤 프로그램 입력: 전체 화면 질문 카드 (레퍼런스: 질문 앱 온보딩) */
+/* 맞춤 프로그램 입력: 전체 화면 질문 카드 (레퍼런스: 질문 앱 온보딩, 색은 사이트 초록·베이지) */
 .btn:disabled{opacity:.4;cursor:not-allowed;transform:none;box-shadow:none}
 body.quiz-mode .top,body.quiz-mode footer{display:none}
 .qz-page{min-height:100vh;min-height:100svh;background:linear-gradient(180deg,var(--qz-bg1) 0%,var(--qz-bg1) 55%,var(--qz-bg2) 100%);display:flex;flex-direction:column;padding-bottom:calc(84px + env(safe-area-inset-bottom,0px))}
@@ -302,13 +304,13 @@ body.quiz-mode .top,body.quiz-mode footer{display:none}
 .qz.in-l{animation:qzL .38s cubic-bezier(.2,.7,.2,1) both}
 @keyframes qzR{from{opacity:0;transform:translateX(56px)}to{opacity:1;transform:none}}
 @keyframes qzL{from{opacity:0;transform:translateX(-56px)}to{opacity:1;transform:none}}
-.qz h1{font-family:var(--body);font-size:22px;font-weight:500;text-align:center}
-.qz .req{font-style:normal;color:var(--qz-bar);margin-left:4px}
+.qz h1{font-family:var(--display);font-size:24px;font-weight:700;text-align:center}
+.qz .req{font-style:normal;color:var(--mid);margin-left:4px}
 .qz-sub{text-align:center;color:var(--muted);font-size:16px;max-width:24em;margin:0 auto}
 .qz-body{display:grid;gap:10px;margin-top:20px}
 .qz-lbl{font-size:14px;font-weight:700;color:var(--muted);margin-top:8px}
 .qz-hint{font-size:14px;color:var(--muted);text-align:center}
-.qz-hint b{color:var(--fg)}
+.qz-hint b{color:var(--early-dark)}
 .opts{display:grid;gap:10px}
 .opt{text-align:left;background:var(--surface);border:1px solid var(--qz-line);border-radius:6px;padding:12px 14px;display:flex;gap:12px;align-items:flex-start;min-height:48px;transition:background .15s,border-color .15s}
 .opt:hover{border-color:var(--muted)}
@@ -355,8 +357,9 @@ body.quiz-mode .top,body.quiz-mode footer{display:none}
 .rxg{display:grid;gap:12px}
 .rxg h3{font-size:18px;color:var(--dark)}
 .rxl{list-style:none;display:grid;gap:10px}
-.rx{display:grid;grid-template-columns:44px minmax(0,1fr);gap:14px;background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:16px 18px}
+.rx{display:grid;grid-template-columns:44px minmax(0,1fr) 200px;align-items:start;gap:14px;background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:16px 18px}
 .rx > div{display:grid;gap:6px;min-width:0}
+.rx-img{aspect-ratio:4/3;border-radius:12px}
 .rx b{font-size:17px}
 .rx-m{font-size:14px;color:var(--muted)}
 .rx-v{font-size:14px;border-radius:10px;padding:6px 10px;justify-self:start}
@@ -385,6 +388,8 @@ body.quiz-mode .top,body.quiz-mode footer{display:none}
   .wrap{padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
   .g2,.bal,.ask-l{grid-template-columns:minmax(0,1fr)}
   .wkg{grid-template-columns:minmax(0,1fr)}
+  .rx{grid-template-columns:44px minmax(0,1fr)}
+  .rx-img{grid-column:1/-1;grid-row:1;aspect-ratio:16/9}
   .wd{grid-template-columns:2.2em minmax(0,1fr) auto;align-items:center;padding:12px 14px}
   .stop,.ask{padding:22px}
   .seg span{display:none}
@@ -577,6 +582,41 @@ late:{kicker:'임신 후기',weeks:'28–40',title:'지지하며 골반 가동�
  warn:['자세를 바꿀 때 충분한 시간을 두고 천천히 움직입니다.','가진통(불규칙한 배 뭉침)이 느껴지면 쉬고, 규칙적으로 반복되면 병원에 연락합니다.','피로하거나 불편하면 즉시 중단하거나 더 쉬운 운동으로 바꿉니다.','37주 이후에는 관절 움직임을 조심스럽게 하고 골반저근 이완 위주로 진행합니다.']
 }
 };
+/* 운동 이미지: 사진을 올린 뒤 아래에 파일 경로를 적으면 맞춤 프로그램과 시기별 프로그램에 함께 나와요.
+   예) '버드독':'media/ex/bird-dog.jpg'  · 비어 있으면 '운동 이미지' 빈칸이 보여요. */
+const EX_IMG = {
+ '복식 호흡 + 골반저근 연결':'',
+ '고양이-소 자세 (Cat-Cow)':'',
+ '누워서 골반 기울이기':'',
+ '데드버그':'',
+ '글루트 브릿지':'',
+ '옆으로 누워 다리 벌리기':'',
+ '무릎 사이드 플랭크':'',
+ '앉아서 사이드 벤드':'',
+ '앉아서 햄스트링 스트레칭':'',
+ '아기 자세 (무릎 넓게)':'',
+ '짐볼 골반 원 그리기':'',
+ '앉아서 호흡 + 케겔':'',
+ '버드독':'',
+ '짐볼 힙 브릿지':'',
+ '사이드 플랭크':'',
+ '코펜하겐 플랭크 (무릎 지지)':'',
+ '짐볼 벽 스쿼트':'',
+ '한쪽 무릎 꿇고 고관절 앞쪽 늘리기':'',
+ '앉아서 출산 호흡 연습':'',
+ '짐볼 골반 앞뒤·좌우 움직이기':'',
+ '벽에 기대어 골반 기울이기':'',
+ '의자 지지 와이드 스쿼트':'',
+ '네발 기기 팔 뻗기':'',
+ '옆으로 누워 클램쉘':'',
+ '의자 잡고 서서 다리 옆으로 들기':'',
+ '골반저근 이완 호흡':'',
+ '왼쪽으로 누워 쉬기':''
+};
+const IMG_IC = '<svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="3"></rect><circle cx="9" cy="10" r="2"></circle><path d="M21 16l-5-5-9 9"></path></svg>';
+const exMedia = (e, cls) => EX_IMG[e.n]
+  ? `<figure class="${cls}"><img src="${EX_IMG[e.n]}" alt="${e.n} 동작" loading="lazy"></figure>`
+  : `<figure class="${cls} empty" role="img" aria-label="${e.n} 이미지 자리">${IMG_IC}<span>운동 이미지</span></figure>`;
 const countOf = id => PROGS[id].phases.reduce((a, p) => a + p.items.length, 0);
 
 const FACTORS = [
@@ -793,7 +833,7 @@ function progHTML(id){
     <div class="exg">${ph.items.map(e => { k++; return `
      <article class="ex rv">
       <div class="ex-top"><span class="ex-no">${pad(k)}</span><div><p class="ex-goal">${e.goal}</p><h3>${e.n}</h3></div></div>
-      <div class="ex-media">[동작 사진 · 영상]</div>
+      ${exMedia(e, 'ex-media')}
       <div class="ex-meta"><span>자세 · ${e.pos}</span><span>${e.dose}</span></div>
       <ol class="steps">${e.how.map((s,j)=>`<li><span class="sn">${j+1}</span><span>${s}</span></li>`).join('')}</ol>
       ${(e.easy||e.hard)?`<div class="lv">${e.easy?`<div class="e"><i>쉬운 단계</i><span>${e.easy}</span></div>`:''}${e.hard?`<div class="h"><i>어려운 단계</i><span>${e.hard}</span></div>`:''}</div>`:''}
@@ -1001,7 +1041,7 @@ function resultHTML(){
       ${r.lv === 3 && e.hard ? `<span class="rx-v h">익숙해지면 · ${e.hard}</span>` : ''}
       ${e.caution ? `<span class="rx-v c">주의 · ${e.caution}</span>` : ''}
       <details><summary>방법 보기</summary><ol>${li(e.how)}</ol></details>
-     </div></li>`; }).join('')}</ol></div>`).join('')}
+     </div>${exMedia(e, 'rx-img')}</li>`; }).join('')}</ol></div>`).join('')}
    </section>
    <section class="blk"><h2 class="disp">나에게 맞춘 주의사항</h2><div class="note"><ul>${li(r.notes)}</ul></div></section>
    ${STOP}

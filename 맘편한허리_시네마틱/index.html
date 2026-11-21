@@ -246,8 +246,9 @@ footer b{color:var(--ink-fg)}
 .ex-no{flex:none;width:44px;height:44px;border-radius:14px;color:var(--on-c);background:var(--c);display:grid;place-items:center;font-weight:900;font-size:17px;font-variant-numeric:tabular-nums}
 .ex-goal{font-size:13px;font-weight:700;color:var(--dark)}
 .ex h3{font-size:21px}
-.ex-media,.rx-img{margin:0;aspect-ratio:16/9;max-width:100%;border-radius:14px;overflow:hidden;display:grid;place-items:center;background:var(--soft)}
-.ex-media img,.rx-img img{width:100%;height:100%;object-fit:cover;display:block}
+.ex-media,.rx-img{margin:0;aspect-ratio:4/3;max-width:100%;border-radius:14px;overflow:hidden;display:grid;place-items:center;background:var(--soft)}
+/* 사진 전체(특히 다리)가 보이도록 자르지 않고 맞춰 넣기 */
+.ex-media img,.rx-img img{width:100%;height:100%;object-fit:contain;display:block}
 .ex-media.empty,.rx-img.empty{border:1.5px dashed var(--c,var(--early));color:var(--dark);place-content:center;gap:6px;justify-items:center;font-size:13px;font-weight:700;opacity:.85}
 .ex-meta{display:flex;flex-wrap:wrap;gap:8px}
 .ex-meta span{font-size:14px;font-weight:500;padding:5px 12px;border-radius:10px;background:var(--tint)}
@@ -389,7 +390,7 @@ body.quiz-mode .top,body.quiz-mode footer{display:none}
   .g2,.bal,.ask-l{grid-template-columns:minmax(0,1fr)}
   .wkg{grid-template-columns:minmax(0,1fr)}
   .rx{grid-template-columns:44px minmax(0,1fr)}
-  .rx-img{grid-column:1/-1;grid-row:1;aspect-ratio:16/9}
+  .rx-img{grid-column:1/-1;grid-row:1;aspect-ratio:4/3}
   .wd{grid-template-columns:2.2em minmax(0,1fr) auto;align-items:center;padding:12px 14px}
   .stop,.ask{padding:22px}
   .seg span{display:none}

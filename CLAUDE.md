@@ -16,3 +16,9 @@
 5. 커밋·푸시하고, 새 `index.html`을 사용자에게 보내며, 미리보기 아티팩트(https://claude.ai/artifact/GRGxkK9jxap8EVgvh2wBGr)도 같은 내용으로 업데이트한다.
 
 사진의 자세가 웹페이지의 운동 설명과 다르면 넣기 전에 사용자에게 알린다.
+
+## 첫 화면 그림
+
+- 파일: `맘편한허리_시네마틱/media/hero.webp` (가로 1000px WebP, 4:3, 애니메이션풍 그림)
+- `index.html`의 `HERO_IMG`가 이 경로를 가리키고, `tools/embed_images.py`가 운동 사진과 함께 파일 안에 넣는다.
+- 바꿀 때는 같은 이름으로 덮어쓰고 `embed_images.py`를 다시 실행한다.

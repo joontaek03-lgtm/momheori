@@ -20,6 +20,9 @@ MIME = {".webp": "image/webp", ".png": "image/png", ".jpg": "image/jpeg", ".jpeg
 html = PAGE.read_text(encoding="utf-8")
 block = re.search(r"const EX_IMG = \{(.*?)\n\};", html, re.S).group(1)
 paths = [p for p in re.findall(r":'([^']*)'", block) if p]
+hero = re.search(r"const HERO_IMG = '([^']+)';", html)
+if hero:
+    paths.append(hero.group(1))
 
 data = {}
 for p in paths:

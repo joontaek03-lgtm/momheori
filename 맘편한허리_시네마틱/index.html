@@ -767,6 +767,7 @@ function homeHTML(){
         <label class="us-in" for="us-due"><span>EDD · 출산 예정일</span><input type="date" id="us-due" value="${esc(plan.due)}"></label>
         <div class="us-act">
           <button class="btn us-go" type="button" data-hero-go disabled>이 주수로 내 프로그램 만들기${ARROW}</button>
+          <button class="us-skip" type="button" data-go="result" data-has-result hidden>지난 결과 다시 보기</button>
           <button class="us-skip" type="button" data-scroll="weeks">예정일 없이 둘러보기</button>
         </div>
       </div>
@@ -787,7 +788,7 @@ function homeHTML(){
   <section class="sec">
     <div class="sec-h"><p class="eyebrow">설문</p><h2 class="disp">8가지를 묻고 강도와 요일을 정해요</h2><p>같은 24주라도 걷기만 해 온 사람과 달리기를 해 온 사람의 운동은 달라요.</p></div>
     <dl class="asks">${asks.map((a, i) => `<div><dt><i>${pad(i + 1)}</i>${a[0]}</dt><dd>${a[1]}</dd></div>`).join('')}</dl>
-    <div class="cta"><button class="btn pri" type="button" data-go="plan">설문 시작하기${ARROW}</button></div>
+    <div class="cta"><button class="btn pri" type="button" data-go="plan">설문 시작하기${ARROW}</button><button class="btn sec" type="button" data-go="result" data-has-result hidden>지난 결과 다시 보기</button></div>
   </section>
 
   <div class="stats">
@@ -1037,7 +1038,8 @@ const PLAN_KEY = 'mh-plan-v2';
 let plan = {due:'',goals:[],h:'',w:'',fit:'',days:[],dur:'',exp:'',kinds:[],med:''};
 try { const s = JSON.parse(localStorage.getItem(PLAN_KEY) || 'null'); if(s) plan = Object.assign(plan, s); } catch(_){}
 const savePlan = () => { try { localStorage.setItem(PLAN_KEY, JSON.stringify(plan)); } catch(_){} };
-let qStep = 0, qDone = false, qDir = 1;
+let qStep = 0, qDone = false, qDir = 1, heroStart = false;
+const hasResult = () => STEPS.every(s => s.ok());
 
 const GOALS = ['허리 통증 줄이기','골반 통증 줄이기','골반저근 강화','체력 유지','순산 준비','자세 바로잡기','체중 관리','숙면·스트레스 관리'];
 const FIT = [['low','거의 앉아서 지내요','주로 앉아 있거나 누워 있어요. 10분만 걸어도 힘들어요.'],['walk','가볍게 움직여요','집안일이나 천천히 걷기 정도. 30분 걷기는 괜찮아요.'],['brisk','적당히 활동해요','빠르게 걷기, 계단 오르기, 가벼운 자전거도 괜찮아요.'],['jog','활발하게 운동해요','가벼운 조깅이나 에어로빅처럼 숨찬 운동도 해요.']];
@@ -1129,7 +1131,7 @@ function refreshQ(){
 }
 function qGo(dir){
   if(dir > 0 && !STEPS[qStep].ok()) return;
-  if(dir > 0 && qStep === STEPS.length - 1){ qDone = true; renderPlan(); return; }
+  if(dir > 0 && qStep === STEPS.length - 1){ qDone = true; if(location.hash === '#result') renderPlan(); else location.hash = 'result'; return; }
   const n = qStep + dir; if(n < 0 || n >= STEPS.length) return;
   qDir = dir; qStep = n; renderQ(true); window.scrollTo(0, 0);
 }
@@ -1247,14 +1249,19 @@ function countUp(){
 }
 
 function show(id){
-  if(!PAGES[id] && !PROGS[id] && id !== 'plan') id = 'home';
+  if(!PAGES[id] && !PROGS[id] && id !== 'plan' && id !== 'result') id = 'home';
+  if(id === 'result' && !hasResult()) id = 'plan';
   document.body.classList.remove('quiz-mode');
-  nav.innerHTML = NAV.map(n => `<button type="button" class="pill${n[0]===id?' on':''}" data-go="${n[0]}"${n[0]===id?' aria-current="page"':''}>${n[1]}</button>`).join('');
+  const navId = id === 'result' ? 'plan' : id;
+  nav.innerHTML = NAV.map(n => `<button type="button" class="pill${n[0]===navId?' on':''}" data-go="${n[0]}"${n[0]===navId?' aria-current="page"':''}>${n[1]}</button>`).join('');
   siteLinks.forEach(a => a.dataset.go === id ? a.setAttribute('aria-current','page') : a.removeAttribute('aria-current'));
   if(id === 'home'){
-    app.innerHTML = homeHTML(); countUp(); updateHero(); drawScan(); document.fonts && document.fonts.ready.then(drawScan);
+    app.innerHTML = homeHTML(); countUp(); updateHero(); document.querySelectorAll('[data-has-result]').forEach(b => { b.hidden = !hasResult(); }); drawScan(); document.fonts && document.fonts.ready.then(drawScan);
   } else if(id === 'plan'){
+    qDone = false; if(!heroStart) qStep = 0; heroStart = false;
     renderPlan(); return;
+  } else if(id === 'result'){
+    qDone = true; renderPlan(); return;
   } else {
     const i = ORDER.indexOf(id), prev = i < 0 ? null : ORDER[i-1], next = i < 0 ? null : ORDER[i+1];
     const body = PROGS[id] ? progHTML(id) : PAGES[id].html();
@@ -1281,10 +1288,10 @@ document.addEventListener('click', e => {
     const a = q.dataset.qz;
     if(a === 'prev') qGo(-1);
     else if(a === 'next') qGo(1);
-    else if(a === 'edit'){ qDone = false; qStep = 0; renderPlan(); }
+    else if(a === 'edit'){ qDone = false; qStep = 0; if(location.hash === '#plan') renderPlan(); else location.hash = 'plan'; }
     return;
   }
-  if(e.target.closest('[data-hero-go]')){ if(!dueOk()) return; qStep = 1; qDone = false; location.hash = 'plan'; return; }
+  if(e.target.closest('[data-hero-go]')){ if(!dueOk()) return; qStep = 1; heroStart = true; location.hash = 'plan'; return; }
   if(e.target.closest('[data-print]')){ window.print(); return; }
   const b = e.target.closest('[data-go]'); if(!b) return;
   const id = b.dataset.go;
@@ -1300,7 +1307,6 @@ document.addEventListener('input', e => {
 });
 window.addEventListener('hashchange', () => show(location.hash.slice(1)));
 
-qDone = STEPS.every(s => s.ok());
 show(location.hash.slice(1));
 </script>
 

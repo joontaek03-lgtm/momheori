@@ -8,49 +8,51 @@
 <title>맘편한 허리 프로젝트</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gothic+A1:wght@400;600;800&family=Nanum+Gothic+Coding:wght@400;700&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gothic+A1:wght@400;600;800&display=swap">
 <style>
-/* Layout: 초음파 출력지 — 첫 화면은 검은 초음파 화면(척추 곡선 + 예정일 입력 → 주수 GA), 시기별 운동은 40주 자 하나. 바탕은 출력 용지 회색, 호박색은 사용자가 넣은 값에만. */
+/* Layout: 첫 화면은 임산부 사진 + 예정일 입력 카드와 큰 버튼 3개. 연한 핑크 바탕, 버튼·선택 표시는 보색인 세이지 그린. 시기별 운동은 40주 자 하나. */
 :root{
-  --bg:#E4E8EB; --surface:#FFFFFF; --fg:#0E1215; --muted:#3B444B; --line:#B9C1C8; --hover:#D8DEE2; --tint:#D9DFE3;
-  --ink:#0D1012; --ink-fg:#E7EBEE; --ink-muted:#98A2AA; --ink-num:#F2B33D;
-  --hl:#F6D58E; --on-c:#FFFFFF; --glass:rgba(228,232,235,.94);
-  --early:#2F7366; --early-soft:#D3E5E0; --early-dark:#1E5248; --ring:#8DBFB3;
-  --mid:#A9502E; --mid-soft:#EFDCD2; --mid-dark:#83381B;
-  --late:#4B579E; --late-soft:#DCE0F0; --late-dark:#343D7A;
-  --danger:#B4473A; --danger-soft:#F6DDD8; --danger-dark:#8E2F24; --danger-line:#EBC3BB;
-  --shadow:rgba(13,16,18,.14);
-  --amber:#F2B33D; --amber-ink:#8A5A00; --amber-soft:#FBEACB;
-  --us-bg:#060809; --us-fg:#D8DEE2; --us-dim:#7D878E;
-  --qz-bg1:#E4E8EB; --qz-bg2:#D6DCE0; --qz-bar:#0D1012; --qz-bar-dark:#2A3035; --qz-line:#B9C1C8; --qz-sel:#FBEACB; --qz-sel-line:#B07508;
+  --bg:#FBF0F2; --surface:#FFFFFF; --fg:#2B1F23; --muted:#66545A; --line:#EBCFD6; --hover:#F6E3E7; --tint:#F7E4E8;
+  --ink:#3A2930; --ink-fg:#FFF4F6; --ink-muted:#D9BFC6; --ink-num:#F6A9BB;
+  --hl:#F9CCD7; --on-c:#FFFFFF; --glass:rgba(251,240,242,.94);
+  --early:#3E8E79; --early-soft:#E0F2EA; --early-dark:#2A6555; --ring:#9FD3C2;
+  --mid:#C4566F; --mid-soft:#FBE1E7; --mid-dark:#943A50;
+  --late:#7262A8; --late-soft:#ECE8F7; --late-dark:#52457F;
+  --danger:#B4473A; --danger-soft:#F9DEDA; --danger-dark:#8E2F24; --danger-line:#EBC3BB;
+  --shadow:rgba(90,35,50,.10);
+  --amber:#3E8E79; --amber-ink:#2A6555; --amber-soft:#E0F2EA;
+  --rose:#E8899E; --rose-soft:#F8DCE3;
+  --qz-bg1:#FBF0F2; --qz-bg2:#F6DDE3; --qz-bar:#3E8E79; --qz-bar-dark:#2A6555; --qz-line:#E3C9CF; --qz-sel:#E0F2EA; --qz-sel-line:#3E8E79;
   --display:"Gothic A1","Apple SD Gothic Neo","Malgun Gothic",system-ui,sans-serif;
   --body:"Gothic A1","Apple SD Gothic Neo","Malgun Gothic",system-ui,sans-serif;
   --mono:"Gothic A1","Apple SD Gothic Neo","Malgun Gothic",system-ui,sans-serif;
-  --machine:"Nanum Gothic Coding",ui-monospace,Menlo,monospace;
+  --machine:"Gothic A1","Apple SD Gothic Neo","Malgun Gothic",system-ui,sans-serif;
 }
 @media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
-  --bg:#0B0E10; --surface:#161C20; --fg:#EEF2F4; --muted:#B3BDC4; --line:#36414A; --hover:#1C2327; --tint:#192024;
-  --ink:#050708; --ink-fg:#E4E9EC; --ink-muted:#8C979F; --ink-num:#F2B33D;
-  --hl:#6B4B12; --on-c:#0B0E10; --glass:rgba(11,14,16,.9);
-  --early:#6FC2AF; --early-soft:#17302A; --early-dark:#9FDCCB; --ring:#3E7D6F;
-  --mid:#E58F6B; --mid-soft:#35231B; --mid-dark:#F3B79C;
-  --late:#9AA4E6; --late-soft:#23284A; --late-dark:#C0C6F3;
+  --bg:#1C1417; --surface:#271C20; --fg:#F7ECEF; --muted:#CDB7BD; --line:#4A363D; --hover:#2F2227; --tint:#2B1F24;
+  --ink:#120C0E; --ink-fg:#F7ECEF; --ink-muted:#B9A3A9; --ink-num:#F6A9BB;
+  --hl:#6B2E3E; --on-c:#1C1417; --glass:rgba(28,20,23,.92);
+  --early:#7FCBB3; --early-soft:#1D332C; --early-dark:#A9DFCD; --ring:#3E7D6F;
+  --mid:#F09AAE; --mid-soft:#3A2028; --mid-dark:#F7BCCA;
+  --late:#B3A7E6; --late-soft:#2A2440; --late-dark:#CEC6F2;
   --danger:#F08A7C; --danger-soft:#3D2220; --danger-dark:#F6ADA2; --danger-line:#5A2E2A;
   --shadow:rgba(0,0,0,.45);
-  --amber:#F2B33D; --amber-ink:#F2B33D; --amber-soft:#3A2C10;
-  --qz-bg1:#0B0E10; --qz-bg2:#151B1F; --qz-bar:#050708; --qz-bar-dark:#20272C; --qz-line:#343D43; --qz-sel:#3A2C10; --qz-sel-line:#F2B33D;
+  --amber:#7FCBB3; --amber-ink:#7FCBB3; --amber-soft:#1D332C;
+  --rose:#C46A80; --rose-soft:#3A2028;
+  --qz-bg1:#1C1417; --qz-bg2:#2A1A20; --qz-bar:#2A6555; --qz-bar-dark:#1D4A3E; --qz-line:#4A363D; --qz-sel:#1D332C; --qz-sel-line:#7FCBB3;
   color-scheme:dark}}
 :root[data-theme="dark"]{
-  --bg:#0B0E10; --surface:#161C20; --fg:#EEF2F4; --muted:#B3BDC4; --line:#36414A; --hover:#1C2327; --tint:#192024;
-  --ink:#050708; --ink-fg:#E4E9EC; --ink-muted:#8C979F; --ink-num:#F2B33D;
-  --hl:#6B4B12; --on-c:#0B0E10; --glass:rgba(11,14,16,.9);
-  --early:#6FC2AF; --early-soft:#17302A; --early-dark:#9FDCCB; --ring:#3E7D6F;
-  --mid:#E58F6B; --mid-soft:#35231B; --mid-dark:#F3B79C;
-  --late:#9AA4E6; --late-soft:#23284A; --late-dark:#C0C6F3;
+  --bg:#1C1417; --surface:#271C20; --fg:#F7ECEF; --muted:#CDB7BD; --line:#4A363D; --hover:#2F2227; --tint:#2B1F24;
+  --ink:#120C0E; --ink-fg:#F7ECEF; --ink-muted:#B9A3A9; --ink-num:#F6A9BB;
+  --hl:#6B2E3E; --on-c:#1C1417; --glass:rgba(28,20,23,.92);
+  --early:#7FCBB3; --early-soft:#1D332C; --early-dark:#A9DFCD; --ring:#3E7D6F;
+  --mid:#F09AAE; --mid-soft:#3A2028; --mid-dark:#F7BCCA;
+  --late:#B3A7E6; --late-soft:#2A2440; --late-dark:#CEC6F2;
   --danger:#F08A7C; --danger-soft:#3D2220; --danger-dark:#F6ADA2; --danger-line:#5A2E2A;
   --shadow:rgba(0,0,0,.45);
-  --amber:#F2B33D; --amber-ink:#F2B33D; --amber-soft:#3A2C10;
-  --qz-bg1:#0B0E10; --qz-bg2:#151B1F; --qz-bar:#050708; --qz-bar-dark:#20272C; --qz-line:#343D43; --qz-sel:#3A2C10; --qz-sel-line:#F2B33D;
+  --amber:#7FCBB3; --amber-ink:#7FCBB3; --amber-soft:#1D332C;
+  --rose:#C46A80; --rose-soft:#3A2028;
+  --qz-bg1:#1C1417; --qz-bg2:#2A1A20; --qz-bar:#2A6555; --qz-bar-dark:#1D4A3E; --qz-line:#4A363D; --qz-sel:#1D332C; --qz-sel-line:#7FCBB3;
   color-scheme:dark}
 
 .t-early{--c:var(--early);--soft:var(--early-soft);--dark:var(--early-dark)}
@@ -385,39 +387,9 @@ h3,b{font-weight:700}
 .stat cite{font-family:var(--mono);color:var(--us-dim)}
 .refs summary{font-family:var(--mono)}
 
-/* 첫 화면: 초음파 화면 */
-.us-wrap{padding-block:28px 8px}
-.us{position:relative;background:var(--us-bg);color:var(--us-fg);border-radius:4px;overflow:hidden;min-height:540px;display:grid;grid-template-columns:minmax(0,1fr) 64px;grid-template-rows:auto 1fr}
-.us-scan{position:absolute;inset:0;width:100%;height:100%;display:block}
-.us-head{position:relative;grid-column:1/-1;display:flex;gap:18px;flex-wrap:wrap;padding:14px 20px;font-family:var(--machine);font-size:13px;color:var(--us-dim);border-bottom:1px solid rgba(216,222,226,.12)}
-.us-head .us-r{margin-left:auto}
-.us-body{position:relative;padding:40px 28px 34px;display:grid;gap:14px;align-content:end;max-width:560px}
-.us-k{font-family:var(--machine);font-size:14px;color:var(--us-dim)}
-.us-ga{font-family:var(--display);font-weight:800;font-size:clamp(3rem,9vw,6.2rem);line-height:1;letter-spacing:-.04em;color:var(--us-fg);opacity:.42}
-.us-ga.on{color:var(--amber);opacity:1}
-.us-say{font-size:18px;max-width:28em;color:var(--us-fg)}
-.us-in{display:grid;gap:6px;max-width:320px;margin-top:6px}
-.us-in span{font-family:var(--machine);font-size:13px;color:var(--amber)}
-.us-in input{font:inherit;font-family:var(--machine);font-size:19px;color:#F4F6F7;background:rgba(6,8,9,.85);border:1px solid rgba(242,179,61,.7);border-radius:4px;padding:10px 12px;min-height:52px;color-scheme:dark}
-.us-in input:focus{outline:2px solid var(--amber);outline-offset:2px}
-.us-act{display:flex;gap:10px 16px;flex-wrap:wrap;align-items:center;margin-top:6px}
-.us-go{background:var(--amber);color:#1A1204}
-.us-go:disabled{opacity:.35;cursor:not-allowed}
-.us-skip{background:none;border:0;color:var(--us-fg);text-decoration:underline;text-underline-offset:4px;font-size:15px;min-height:44px;padding:0}
-.us :focus-visible{outline-color:var(--amber)}
-.us-ruler{position:relative;grid-column:2;grid-row:2;border-left:1px solid rgba(216,222,226,.14);margin:18px 0}
-.rt{position:absolute;right:0;top:calc(var(--w) / 40 * 100%);width:8px;height:1px;background:rgba(216,222,226,.35)}
-.rt.big{width:16px;background:rgba(216,222,226,.6)}
-.rt.cut{width:28px;background:rgba(216,222,226,.85)}
-.rl{position:absolute;left:8px;top:calc(var(--w) / 40 * 100%);transform:translateY(-120%);font-family:var(--machine);font-size:11px;color:var(--us-dim)}
-.rm{position:absolute;right:0;left:-6px;top:calc(var(--w) / 40 * 100%);height:2px;background:var(--amber);font-family:var(--machine);font-size:12px;color:var(--amber);font-weight:700;padding-left:10px;line-height:0}
-.rm::before{content:"";position:absolute;left:-1px;top:-5px;border:6px solid transparent;border-left-color:var(--amber);border-right:0}
-.rm[hidden],.sm[hidden]{display:none}
-.us-foot{display:flex;flex-wrap:wrap;gap:4px 18px;padding-top:10px;font-family:var(--machine);font-size:12.5px;color:var(--muted)}
 
 /* 40주 자 */
 .sec{padding-bottom:80px}
-.us-wrap + .wrap .sec:first-child{padding-top:64px}
 .strip{display:grid;gap:0;border:1px solid var(--line);border-radius:4px;background:var(--surface);overflow:hidden}
 .strip-rule{position:relative;height:34px;border-bottom:1px solid var(--line);background:var(--tint)}
 .wt{position:absolute;bottom:0;left:calc(var(--w) / 40 * 100%);width:1px;height:7px;background:var(--muted);opacity:.55}
@@ -501,6 +473,47 @@ h3,b{font-weight:700}
 .card,.ex,.rx,.hub-b,.wd,.ov > div,.bars{border:1px solid var(--line)}
 .d-hero .ov > div{border-color:transparent}
 
+/* ===== 연한 핑크 + 세이지 그린, 둥근 모양 ===== */
+.brand-mark{border-radius:50%;background:var(--rose);color:#fff}
+.pill,.site-nav a{border-radius:999px}
+.btn,.qz-arrow.done{border-radius:999px}
+.btn.pri{background:var(--amber);color:var(--on-c)}
+.card,.ex,.rx,.stop,.note,.ov > div,.wd,.bars,.tbl,.hub-b,.strip,.qz,.bal > div,.pager button{border-radius:16px}
+.ex-media,.rx-img{border-radius:12px}
+.opt,.chip,.fld input,.qz-cancel,.qz-count,.subnav button,.goal-chips span,.lv i,.caut,.rx-v,.ex-meta span,.chips span,.st{border-radius:10px}
+.ex-no{border-radius:50%}
+.card,.ex,.rx,.hub-b,.strip,.qz,.wd,.ov > div,.bars,.tbl{box-shadow:0 2px 10px var(--shadow)}
+.stat{border-radius:16px;background:var(--surface);color:var(--fg);border:1px solid var(--line)}
+.stat b{color:var(--mid)}
+.stat cite{color:var(--muted)}
+.eyebrow{color:var(--mid)}
+.hub-b:hover{border-color:var(--rose)}
+.hub-b i{color:var(--mid)}
+.d-hero{border-radius:0 0 28px 28px}
+.strip-rule{background:var(--rose-soft)}
+/* 첫 화면 */
+.hero2{background:linear-gradient(180deg,var(--rose-soft),var(--bg));padding-block:36px 8px}
+.hero2-in{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,.95fr);gap:40px;align-items:center}
+.h2-text{display:grid;gap:14px;min-width:0}
+.h2-text h1{font-size:clamp(2rem,4.6vw,3.1rem);line-height:1.25}
+.h2-text .lead{margin-top:0;font-size:17.5px;color:var(--muted)}
+.ga-card{background:var(--surface);border:1px solid var(--line);border-radius:20px;padding:22px;display:grid;gap:12px;box-shadow:0 6px 24px var(--shadow);margin-top:6px}
+.us-in{display:grid;gap:6px;max-width:320px}
+.us-in span{font-size:14px;font-weight:700;color:var(--muted)}
+.us-in input{font:inherit;font-size:18px;color:var(--fg);background:var(--bg);border:1px solid var(--line);border-radius:12px;padding:10px 14px;min-height:52px}
+.us-in input:focus{outline:2px solid var(--amber);outline-offset:2px}
+.ga-line{display:flex;align-items:baseline;gap:10px}
+.us-k{font-size:15px;color:var(--muted)}
+.us-ga{font-family:var(--display);font-weight:800;font-size:clamp(2.2rem,6vw,3rem);line-height:1;letter-spacing:-.03em;color:var(--line)}
+.us-ga.on{color:var(--amber)}
+.us-say{font-size:16px}
+.us-act{display:flex;gap:10px 16px;flex-wrap:wrap;align-items:center}
+.us-go:disabled{opacity:.4;cursor:not-allowed}
+.us-skip{background:none;border:0;color:var(--fg);text-decoration:underline;text-underline-offset:4px;font-size:15px;min-height:44px;padding:0}
+.h2-photo{margin:0;aspect-ratio:4/5;max-width:100%;border-radius:28px;overflow:hidden;background:var(--rose-soft);box-shadow:0 10px 30px var(--shadow)}
+.h2-photo img{width:100%;height:100%;object-fit:cover;object-position:50% 40%;display:block}
+.h2-foot{font-size:13px;color:var(--muted);padding-top:16px}
+
 @media (max-width:900px){
   .hero{grid-template-columns:minmax(0,1fr);padding-top:44px}
   .stats,.progs,.tiles,.g3,.stop-list{grid-template-columns:minmax(0,1fr)}
@@ -508,6 +521,8 @@ h3,b{font-weight:700}
   .d-grid{grid-template-columns:minmax(0,1fr)}
   .strip-segs{flex-direction:column}
   .hub{grid-template-columns:minmax(0,1fr)}
+  .hero2-in{grid-template-columns:minmax(0,1fr);gap:20px}
+  .h2-photo{order:-1;aspect-ratio:4/3;border-radius:22px}
   .hub-b{min-height:0}
   .seg2{border-right:0;border-bottom:1px solid var(--line)}
   .seg2:last-child{border-bottom:0}
@@ -518,12 +533,6 @@ h3,b{font-weight:700}
 @media (max-width:640px){
   .wrap{padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
   .g2,.bal{grid-template-columns:minmax(0,1fr)}
-  .us{min-height:620px;grid-template-columns:minmax(0,1fr) 44px}
-  .us-body{padding:110px 18px 26px;background:linear-gradient(to bottom,rgba(6,8,9,0),rgba(6,8,9,.86) 110px)}
-  .rm{font-size:0}
-  .us-head{font-size:12px;padding:12px 16px;gap:10px}
-  .us-head .us-r{display:none}
-  .rl{display:none}
   .asks > div{grid-template-columns:minmax(0,1fr);gap:2px}
   .wkg{grid-template-columns:minmax(0,1fr)}
   .rx{grid-template-columns:44px minmax(0,1fr)}
@@ -792,29 +801,30 @@ const today = () => { const d = new Date(); return `${d.getFullYear()}.${pad(d.g
 const HUB = [['plan','01','맞춤 프로그램','8가지 질문에 답하면 요일별 운동 계획이 나와요'],['weeks','02','시기별 운동','초기·중기·후기 운동 27가지를 사진과 함께 봐요'],['learn','03','알아두기','요통 원인과 증상, 운동을 멈춰야 하는 신호']];
 function homeHTML(){
   return `<div class="view-in">
-  <section class="us-wrap"><div class="wrap">
-    <div class="us" id="us">
-      <canvas class="us-scan" id="us-scan" aria-hidden="true"></canvas>
-      <div class="us-head"><span>맘편한 허리</span><span>임산부 요통 운동</span><span class="us-r">SMU ONE CORE</span></div>
-      <div class="us-body">
-        <p class="us-k">GA · 임신 주수</p>
-        <h1 class="us-ga" id="us-ga">--주 --일</h1>
+  <section class="hero2"><div class="wrap hero2-in">
+    <div class="h2-text">
+      <p class="eyebrow">임산부 맞춤 요통 운동</p>
+      <h1 class="disp">지금 주수에 맞는<br>허리 운동을 찾아 드려요</h1>
+      <p class="lead">출산 예정일을 넣으면 몇 주인지 바로 계산해요. 8가지 질문에 답하면 요일별 운동 계획이 나와요.</p>
+      <div class="ga-card">
+        <label class="us-in" for="us-due"><span>출산 예정일</span><input type="date" id="us-due" value="${esc(plan.due)}"></label>
+        <p class="ga-line"><span class="us-k">지금</span><b class="us-ga" id="us-ga">--주 --일</b></p>
         <p class="us-say" id="us-say">출산 예정일을 넣으면 지금 몇 주인지, 오늘 허리에 맞는 운동이 무엇인지 알려 드려요.</p>
-        <label class="us-in" for="us-due"><span>EDD · 출산 예정일</span><input type="date" id="us-due" value="${esc(plan.due)}"></label>
         <div class="us-act">
-          <button class="btn us-go" type="button" data-hero-go disabled>이 주수로 내 프로그램 만들기${ARROW}</button>
+          <button class="btn pri us-go" type="button" data-hero-go disabled>이 주수로 내 프로그램 만들기${ARROW}</button>
           <button class="us-skip" type="button" data-go="result" data-has-result hidden>지난 결과 다시 보기</button>
           <button class="us-skip" type="button" data-go="weeks">예정일 없이 둘러보기</button>
         </div>
       </div>
-      <div class="us-ruler" aria-hidden="true">${ticks('rt')}<span class="rl" style="--w:0">0</span><span class="rl" style="--w:13">13</span><span class="rl" style="--w:27">27</span><span class="rl" style="--w:40">40주</span><b class="rm" id="us-mark"></b></div>
     </div>
-    <p class="us-foot"><span>${today()}</span><span>상명대학교 스포츠건강관리전공 ONE CORE</span><span>미국산부인과학회(ACOG) 지침 · 선행연구 기반</span></p>
-  </div></section>
+    <figure class="h2-photo"><img src="${exSrc(EX_IMG['앉아서 출산 호흡 연습'])}" alt="짐볼에 앉아 배에 두 손을 얹고 천천히 호흡하는 임산부"></figure>
+  </div>
+  <p class="wrap h2-foot">상명대학교 스포츠건강관리전공 ONE CORE · 미국산부인과학회(ACOG) 지침과 선행연구를 바탕으로 만들었어요.</p>
+  </section>
 
   <div class="wrap">
     <nav class="hub" aria-label="바로가기">${HUB.map(h => `<button type="button" class="hub-b" data-go="${h[0]}"><i>${h[1]}</i><b>${h[2]}</b><span>${h[3]}</span>${ARROW}</button>`).join('')}</nav>
-    <div class="hub-more"><button class="btn sec" type="button" data-go="result" data-has-result hidden>지난 결과 다시 보기</button></div>
+    <div class="hub-more"></div>
   </div></div>`;
 }
 
@@ -874,54 +884,6 @@ const LEARN_BODY = () => `<div class="wrap d-body">
   </details>
 </div>`;
 
-/* 초음파 화면: 부채꼴 안의 반점(스페클)과 허리뼈가 만드는 밝은 곡선. 같은 그림이 나오도록 시드 고정 */
-function rng(a){ return () => { a |= 0; a = a + 0x6D2B79F5 | 0; let t = Math.imul(a ^ a >>> 15, 1 | a); t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t; return ((t ^ t >>> 14) >>> 0) / 4294967296; }; }
-function drawScan(){
-  const cv = document.getElementById('us-scan'); if(!cv) return;
-  const box = cv.getBoundingClientRect(), dpr = Math.min(2, window.devicePixelRatio || 1);
-  const W = Math.round(box.width * dpr), H = Math.round(box.height * dpr); if(!W || !H) return;
-  cv.width = W; cv.height = H;
-  const g = cv.getContext('2d'), r = rng(2407);
-  g.fillStyle = '#060809'; g.fillRect(0, 0, W, H);
-  const wide = W > H * 1.1, cx = wide ? W * 0.66 : W * 0.5, cy = -H * 0.04;
-  const R0 = H * 0.1, R1 = H * (wide ? 1.0 : 0.98), A = (wide ? 34 : 40) * Math.PI / 180;
-  g.save(); g.beginPath(); g.moveTo(cx + Math.sin(-A) * R0, cy + Math.cos(-A) * R0);
-  g.arc(cx, cy, R1, Math.PI / 2 + A, Math.PI / 2 - A, true); g.arc(cx, cy, R0, Math.PI / 2 - A, Math.PI / 2 + A, false); g.closePath(); g.clip();
-  // 깊이에 따라 어두워지는 바탕
-  const bg = g.createRadialGradient(cx, cy, R0, cx, cy, R1); bg.addColorStop(0, '#2b3034'); bg.addColorStop(.55, '#15191b'); bg.addColorStop(1, '#07090a'); g.fillStyle = bg; g.fillRect(0, 0, W, H);
-  // 스페클: 부채꼴 방향을 따라 누운 작은 알갱이
-  const N = Math.round(W * H / (dpr * dpr) / 26);
-  for(let i = 0; i < N; i++){
-    const t = (r() * 2 - 1) * A, d = R0 + Math.pow(r(), .85) * (R1 - R0);
-    const x = cx + Math.sin(t) * d, y = cy + Math.cos(t) * d, fall = 1 - (d - R0) / (R1 - R0) * .75;
-    const v = Math.pow(r(), 2.2) * fall;
-    g.fillStyle = `rgba(214,222,228,${(v * .55).toFixed(3)})`;
-    g.save(); g.translate(x, y); g.rotate(-t); g.fillRect(-(1.2 + r() * 2.6) * dpr, -.6 * dpr, (2.4 + r() * 5) * dpr, (.8 + r() * 1.1) * dpr); g.restore();
-  }
-  // 허리뼈(요추) 다섯 개 + 엉치뼈: 앞으로 휜 곡선 위의 밝은 반사와 그 아래 그림자
-  const sx = wide ? cx + W * .02 : cx + W * .04, top = H * .30, bot = H * .86;
-  for(let k = 0; k < 7; k++){
-    const u = k / 6, y = top + (bot - top) * u, x = sx - Math.sin(u * Math.PI) * W * (wide ? .06 : .11) + u * W * .02;
-    const len = (wide ? W * .055 : W * .13) * (1 - u * .25), ang = -.18 + u * .32;
-    g.save(); g.translate(x, y); g.rotate(ang);
-    const bend = len * .14, arcY = t => -bend * (1 - Math.pow(2 * t - 1, 2));
-    for(let row = 0, rows = 22; row < rows; row++){
-      const f = row / rows, w = len * (1 - f * .45);
-      g.fillStyle = `rgba(0,0,0,${(.42 * (1 - f)).toFixed(3)})`; g.fillRect(-w / 2, 3 * dpr + row * H * .0032, w, H * .0034);
-    }
-    for(let j = 0; j < 46; j++){
-      const t = r(), w = (1.5 + r() * 4) * dpr;
-      g.fillStyle = `rgba(240,244,246,${(.3 + r() * .6 * (1 - Math.abs(2 * t - 1) * .6)).toFixed(2)})`;
-      g.fillRect(-len / 2 + t * len - w / 2, arcY(t) + (r() * 2 - 1) * 1.6 * dpr, w, (1.2 + r() * 1.8) * dpr);
-    }
-    g.restore();
-  }
-  g.restore();
-  // 부채꼴 테두리와 깊이 눈금(cm)
-  g.strokeStyle = 'rgba(216,222,226,.25)'; g.lineWidth = dpr; g.beginPath(); g.arc(cx, cy, R1, Math.PI / 2 + A, Math.PI / 2 - A, true); g.stroke();
-  g.fillStyle = 'rgba(216,222,226,.55)'; g.font = `${10 * dpr}px "Nanum Gothic Coding", monospace`;
-  for(let c = 0; c <= 14; c += 2){ const d = R0 + (R1 - R0) * c / 14, x = cx + Math.sin(A) * d + 6 * dpr, y = cy + Math.cos(A) * d; g.fillRect(x, y, (c % 4 ? 4 : 8) * dpr, dpr); if(c % 4 === 0) g.fillText(String(c), x + 11 * dpr, y + 3.5 * dpr); }
-}
 const HERO_SAY = {early:'임신 초기예요. 입덧이 심한 날은 호흡과 스트레칭만 해도 괜찮아요.', mid:'임신 중기예요. 바로 누워서 하는 운동은 빼고 네발 기기·옆으로 눕기로 짤게요.', late:'임신 후기예요. 의자와 짐볼에 기대서 하는 운동으로 짤게요.'};
 function updateHero(){
   const ga = document.getElementById('us-ga'); if(!ga) return;
@@ -940,7 +902,6 @@ function updateHero(){
     [mark].forEach(m => { if(m) m.hidden = true; });
   }
 }
-let scanT; addEventListener('resize', () => { clearTimeout(scanT); scanT = setTimeout(drawScan, 150); });
 
 /* ---------- 세부 화면 ---------- */
 const PAGES = {
@@ -1310,7 +1271,7 @@ function show(id){
   nav.innerHTML = NAV.map(n => `<button type="button" class="pill${n[0]===navId?' on':''}" data-go="${n[0]}"${n[0]===navId?' aria-current="page"':''}>${n[1]}</button>`).join('');
   siteLinks.forEach(a => a.dataset.go === id ? a.setAttribute('aria-current','page') : a.removeAttribute('aria-current'));
   if(id === 'home'){
-    app.innerHTML = homeHTML(); countUp(); updateHero(); document.querySelectorAll('[data-has-result]').forEach(b => { b.hidden = !hasResult(); }); drawScan(); document.fonts && document.fonts.ready.then(drawScan);
+    app.innerHTML = homeHTML(); countUp(); updateHero(); document.querySelectorAll('[data-has-result]').forEach(b => { b.hidden = !hasResult(); });
   } else if(id === 'plan'){
     qDone = false; if(!heroStart) qStep = 0; heroStart = false;
     renderPlan(); return;

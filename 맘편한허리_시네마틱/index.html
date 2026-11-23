@@ -514,6 +514,75 @@ h3,b{font-weight:700}
 .h2-photo img{width:100%;height:100%;object-fit:cover;object-position:50% 50%;display:block}
 .h2-foot{font-size:13px;color:var(--muted);padding-top:16px}
 
+/* ===== 운동 따라 하기 ===== */
+.wo-cta{display:grid;gap:10px;justify-items:start;margin-top:22px}
+.wo-cta.inline{margin-top:-6px}
+.wo-cta p{font-size:15px;color:var(--muted)}
+.wo-start{position:relative;display:inline-flex;align-items:center;gap:12px;min-height:64px;padding:0 34px;border:0;border-radius:999px;background:var(--amber);color:var(--on-c);font-size:20px;font-weight:800;box-shadow:0 8px 24px var(--shadow);animation:woPulse 2.4s ease-out infinite}
+.wo-start:hover{transform:translateY(-2px)}
+@keyframes woPulse{0%{box-shadow:0 8px 24px var(--shadow),0 0 0 0 rgba(62,142,121,.45)}70%{box-shadow:0 8px 24px var(--shadow),0 0 0 16px rgba(62,142,121,0)}100%{box-shadow:0 8px 24px var(--shadow),0 0 0 0 rgba(62,142,121,0)}}
+body.wo-open{overflow:hidden}
+.wo{position:fixed;inset:0;z-index:60;background:var(--bg);display:flex;flex-direction:column;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+.wo-top{display:flex;align-items:center;gap:12px;padding:12px max(16px,env(safe-area-inset-left,0px)) 10px;max-width:760px;width:100%;margin:0 auto}
+.wo-x,.wo-stop{border:0;border-radius:999px;min-height:42px;padding:0 14px;font-size:15px;font-weight:700;background:var(--surface);color:var(--fg);box-shadow:0 1px 4px var(--shadow);white-space:nowrap}
+.wo-stop{background:var(--danger);color:#fff}
+.wo-prog{flex:1;display:grid;gap:4px;font-size:13px;font-weight:700;color:var(--muted);text-align:center;font-variant-numeric:tabular-nums}
+.wo-bar{height:6px;border-radius:999px;background:var(--line);overflow:hidden}
+.wo-bar i{display:block;height:100%;background:var(--c,var(--amber));border-radius:999px;transition:width .3s}
+.wo-body{flex:1;overflow-y:auto;padding:6px max(16px,env(safe-area-inset-left,0px)) 24px;max-width:760px;width:100%;margin:0 auto;display:flex;flex-direction:column;gap:12px}
+.wo-body > *{flex:none}
+.wo-phase{font-size:14px;font-weight:800;color:var(--c,var(--mid))}
+.wo-img{margin:0;width:100%;max-width:100%;border-radius:20px;overflow:hidden;background:var(--soft,var(--tint))}
+.wo-img img{width:100%;height:auto;aspect-ratio:4/3;object-fit:contain;display:block}
+.wo-img.empty{aspect-ratio:4/3;display:grid;place-content:center}
+.wo-img.empty{border:1.5px dashed var(--c,var(--line));color:var(--muted);gap:6px;justify-items:center;font-weight:700;font-size:14px}
+.wo-name{font-size:clamp(1.7rem,6vw,2.3rem);line-height:1.25}
+.wo-meta{font-size:17px;color:var(--muted)}
+.wo-meta b{color:var(--fg)}
+.wo-sets{background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:14px 16px;display:grid;gap:10px}
+.wo-sets-h{font-size:15px;color:var(--muted);font-weight:700}
+.wo-set-row{display:flex;flex-wrap:wrap;gap:10px}
+.wo-set{width:64px;height:64px;border-radius:16px;border:2px solid var(--c,var(--amber));background:var(--surface);color:var(--c,var(--amber));font-size:24px;font-weight:800;font-variant-numeric:tabular-nums}
+.wo-set.on{background:var(--c,var(--amber));color:#fff}
+.wo-var{font-size:15px;border-radius:12px;padding:8px 12px;justify-self:start}
+.wo-var.e{background:var(--early-soft);color:var(--early-dark)}
+.wo-var.h{background:var(--mid-soft);color:var(--mid-dark)}
+.wo-var.c{background:var(--danger-soft);color:var(--danger-dark)}
+.wo-steps{list-style:none;display:grid;gap:10px;padding:0;margin:0}
+.wo-steps li{display:grid;grid-template-columns:34px minmax(0,1fr);gap:10px;align-items:start}
+.wo-steps li span{width:34px;height:34px;border-radius:50%;background:var(--soft,var(--tint));color:var(--c,var(--fg));display:grid;place-items:center;font-weight:800}
+.wo-steps li p{font-size:18px;line-height:1.6}
+.wo-nav{display:flex;gap:10px;padding:10px max(16px,env(safe-area-inset-left,0px)) 14px;max-width:760px;width:100%;margin:0 auto;border-top:1px solid var(--line);background:var(--bg)}
+.wo-nav button{min-height:58px;border-radius:999px;font-size:18px;font-weight:800;border:0;display:inline-flex;align-items:center;justify-content:center;gap:8px}
+.wo-prev{flex:0 0 auto;padding:0 22px;background:var(--surface);color:var(--fg);border:1px solid var(--line)!important}
+.wo-prev:disabled{opacity:.4}
+.wo-next{flex:1;background:var(--fg);color:var(--bg)}
+.wo-next.ready{background:var(--c,var(--amber));color:#fff;animation:woPulse 2s ease-out infinite}
+.wo-rest{position:absolute;left:0;right:0;bottom:0;z-index:2;background:var(--surface);border-radius:28px 28px 0 0;box-shadow:0 -10px 40px var(--shadow);padding:20px 20px calc(24px + env(safe-area-inset-bottom,0px));display:grid;justify-items:center;gap:8px}
+.wo-rest-h{font-size:16px;font-weight:800;color:var(--muted)}
+.wo-breath{position:relative;width:150px;height:150px;display:grid;place-items:center}
+.wo-breath .b-ring{position:absolute;inset:0;border-radius:50%;border:2px solid var(--c,var(--ring));animation:ring 5s ease-out infinite}
+.wo-breath .b-core{position:absolute;inset:0;border-radius:50%;background:var(--soft,var(--early-soft));animation:breathe 10s ease-in-out infinite}
+.wo-breath .b-label{position:relative;display:grid;place-items:center}
+.wo-breath .b-label span{grid-area:1/1;font-weight:800;font-size:15px;color:var(--c,var(--early-dark))}
+.wo-breath .b-in{animation:inL 10s linear infinite}
+.wo-breath .b-ex{animation:exL 10s linear infinite}
+.wo-count{font-size:64px;font-weight:800;line-height:1;font-variant-numeric:tabular-nums}
+.wo-rest-act{display:flex;gap:10px}
+.wo-rest-act button{min-height:50px;padding:0 22px;border-radius:999px;border:1px solid var(--line);background:var(--bg);color:var(--fg);font-size:16px;font-weight:700}
+.wo-sheet{position:absolute;inset:0;z-index:3;background:rgba(43,31,35,.55);display:flex;align-items:flex-end;overflow-y:auto}
+.wo-sheet-in{background:var(--bg);border-radius:28px 28px 0 0;padding:24px max(16px,env(safe-area-inset-left,0px)) calc(24px + env(safe-area-inset-bottom,0px));display:grid;gap:14px;width:100%;max-width:760px;margin:0 auto}
+.wo-sheet-in h2{font-size:24px;color:var(--danger-dark)}
+.wo-sheet-in .stop{padding:18px}
+.wo-sheet-in .stop-list{grid-template-columns:minmax(0,1fr)}
+.wo-sheet-act{display:grid;gap:10px}
+.wo-sheet-act button{min-height:54px;border-radius:999px;font-size:17px;font-weight:800;border:1px solid var(--line);background:var(--surface);color:var(--fg)}
+.wo-sheet-act .ok{background:var(--amber);color:var(--on-c);border:0}
+.wo-done{margin:auto;max-width:520px;padding:24px;display:grid;gap:14px;justify-items:center;text-align:center}
+.wo-done h2{font-size:32px}
+.wo-done-n{font-size:20px}
+.wo-done-n b{color:var(--c,var(--amber));font-size:28px}
+
 @media (max-width:900px){
   .hero{grid-template-columns:minmax(0,1fr);padding-top:44px}
   .stats,.progs,.tiles,.g3,.stop-list{grid-template-columns:minmax(0,1fr)}
@@ -1209,6 +1278,10 @@ function resultHTML(){
     <div><dt>주간 운동량</dt><dd>${goal}</dd></div>
     <div><dt>프로그램</dt><dd>${r.P.kicker} (${r.P.weeks}주)</dd></div>
    </dl>
+   <div class="wo-cta a5">
+    <button class="wo-start" type="button" data-wo="start">${PLAY_IC}<span>운동 시작하기</span></button>
+    <p>운동 ${r.phases.reduce((a, p) => a + p.items.length, 0)}가지를 하나씩 크게 보여 드려요 · 세트마다 쉬는 시간 타이머</p>
+   </div>
   </div></section>
   <div class="wrap d-body">
    ${r.limited ? `<div class="stop"><div class="stop-h"><span class="stop-ic">${ALERT}</span><h3>운동 전에 담당 의사와 먼저 상의하세요</h3></div><p>운동 제한을 들었다면 의사가 허락한 범위 안에서만 운동해야 해요. 아래에는 대부분 부담이 적은 호흡과 스트레칭만 담았어요.</p></div>` : ''}
@@ -1222,6 +1295,7 @@ function resultHTML(){
     ${r.limited ? '' : `<p class="intro">2주 동안 몸이 적응하면 걷기 시간을 5분씩 늘려, 주 150분(미국산부인과학회 권장)에 가까워지도록 해요.</p>`}
    </section>
    <section class="blk" id="rs-routine" role="tabpanel" hidden><h2 class="disp">허리 운동 루틴</h2>
+    <div class="wo-cta inline"><button class="wo-start" type="button" data-wo="start">${PLAY_IC}<span>운동 시작하기</span></button></div>
     ${r.phases.map(ph => `<div class="rxg"><h3>${ph.name}</h3><ol class="rxl">${ph.items.map(e => { k++; return `
      <li class="rx"><span class="ex-no">${pad(k)}</span><div>
       <b>${e.n}</b><span class="rx-m">${e.pos} · ${dose(e.dose)}</span>
@@ -1239,6 +1313,149 @@ function resultHTML(){
    </div>
   </div></div>`;
 }
+
+
+/* ---------- 운동 따라 하기: 한 동작씩 크게, 세트 번호칸, 쉬는 시간 타이머 ---------- */
+const PLAY_IC = '<svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5.5v13a1 1 0 0 0 1.5.86l10.5-6.5a1 1 0 0 0 0-1.72L9.5 4.64A1 1 0 0 0 8 5.5z"></path></svg>';
+let wo = null, woTick = null, audioCtx = null;
+
+/* 세트 수: '× 2세트' → 2, '× 1–2세트' → 2, '20초 × 2회' → 2. 그 밖에는 1세트 */
+function setsOf(d){
+  const a = d.match(/×\s*(\d+)(?:–(\d+))?\s*세트/); if(a) return +(a[2] || a[1]);
+  const b = d.match(/×\s*(\d+)\s*회/); if(b && +b[1] <= 3) return +b[1];
+  return 1;
+}
+function startWorkout(){
+  const r = buildPlan();
+  const dose = d => r.lv === 1 ? d.replace('× 2세트', '× 1–2세트') : d;
+  const list = [];
+  r.phases.forEach(ph => ph.items.forEach(e => list.push({e, phase: ph.name, dose: dose(e.dose), sets: setsOf(dose(e.dose)), done: 0})));
+  const rest = r.tri === 'late' || r.limited ? 60 : ({1:60, 2:45, 3:30})[r.lv];
+  wo = {list, i: 0, rest, lv: r.lv, tri: r.tri};
+  let el = document.getElementById('wo');
+  if(!el){ el = document.createElement('div'); el.id = 'wo'; document.body.appendChild(el); }
+  document.body.classList.add('wo-open');
+  renderWo();
+}
+function woVariant(e){
+  if(wo.lv === 1 && e.easy) return `<p class="wo-var e">쉬운 단계로 · ${e.easy}</p>`;
+  if(wo.lv === 3 && e.hard) return `<p class="wo-var h">익숙해지면 · ${e.hard}</p>`;
+  return '';
+}
+function renderWo(){
+  const el = document.getElementById('wo'), n = wo.list.length, it = wo.list[wo.i], e = it.e, last = wo.i === n - 1;
+  const allDone = it.done >= it.sets;
+  el.className = `wo t-${wo.tri}`;
+  el.setAttribute('role', 'dialog'); el.setAttribute('aria-modal', 'true'); el.setAttribute('aria-label', '운동 따라 하기');
+  el.innerHTML = `
+  <div class="wo-top">
+    <button type="button" class="wo-x" data-wo="exit">✕ 그만하기</button>
+    <div class="wo-prog"><span>${wo.i + 1} / ${n}</span><div class="wo-bar"><i style="width:${(wo.i + 1) / n * 100}%"></i></div></div>
+    <button type="button" class="wo-stop" data-wo="stop">불편해요</button>
+  </div>
+  <div class="wo-body" id="wo-body">
+    <p class="wo-phase">${it.phase} · ${wo.i + 1}번째 운동</p>
+    ${exMedia(e, 'wo-img')}
+    <h2 class="wo-name">${e.n}</h2>
+    <p class="wo-meta">${e.pos} · <b>${it.dose}</b></p>
+    <div class="wo-sets">
+      <p class="wo-sets-h">${allDone ? '모든 세트를 마쳤어요. 다음 운동으로 넘어가세요.' : `세트를 마칠 때마다 번호를 눌러 주세요 · 쉬는 시간 ${wo.rest}초`}</p>
+      <div class="wo-set-row">${Array.from({length: it.sets}, (_, k) => `<button type="button" class="wo-set${k < it.done ? ' on' : ''}" data-set="${k}" aria-pressed="${k < it.done}" aria-label="${k + 1}세트${k < it.done ? ' 완료' : ''}">${k < it.done ? '✓' : k + 1}</button>`).join('')}</div>
+    </div>
+    ${woVariant(e)}
+    ${e.caution ? `<p class="wo-var c">주의 · ${e.caution}</p>` : ''}
+    <ol class="wo-steps">${e.how.map((h, j) => `<li><span>${j + 1}</span><p>${h}</p></li>`).join('')}</ol>
+  </div>
+  <div class="wo-nav">
+    <button type="button" class="wo-prev" data-wo="prev" ${wo.i ? '' : 'disabled'}>이전</button>
+    <button type="button" class="wo-next${allDone ? ' ready' : ''}" data-wo="next">${last ? '운동 마치기' : '다음 운동'}${ARROW}</button>
+  </div>
+  <div class="wo-rest" id="wo-rest" hidden>
+    <p class="wo-rest-h">쉬는 시간</p>
+    <div class="wo-breath" aria-hidden="true"><span class="b-ring"></span><span class="b-core"></span><span class="b-label"><span class="b-in">들이마시기 4초</span><span class="b-ex">내쉬기 6초</span></span></div>
+    <p class="wo-count" id="wo-count" aria-live="polite">${wo.rest}</p>
+    <div class="wo-rest-act"><button type="button" data-wo="more">+10초</button><button type="button" data-wo="skip">건너뛰기</button></div>
+  </div>
+  <div class="wo-sheet" id="wo-sheet" hidden></div>`;
+  el.scrollTop = 0;
+  const b = document.getElementById('wo-body'); if(b) b.scrollTop = 0;
+}
+/* 쉬는 시간 끝 알림: 짧은 '띠링' 두 번 + 진동 */
+function chime(){
+  try {
+    audioCtx = audioCtx || new (window.AudioContext || window.webkitAudioContext)();
+    [0, .22].forEach((t, i) => {
+      const o = audioCtx.createOscillator(), g = audioCtx.createGain(), at = audioCtx.currentTime + t;
+      o.type = 'sine'; o.frequency.value = i ? 1046 : 784;
+      g.gain.setValueAtTime(.0001, at); g.gain.exponentialRampToValueAtTime(.3, at + .02); g.gain.exponentialRampToValueAtTime(.0001, at + .5);
+      o.connect(g).connect(audioCtx.destination); o.start(at); o.stop(at + .55);
+    });
+  } catch(_){}
+  try { navigator.vibrate && navigator.vibrate([200, 100, 200]); } catch(_){}
+}
+function startRest(sec){
+  clearInterval(woTick);
+  try { audioCtx = audioCtx || new (window.AudioContext || window.webkitAudioContext)(); audioCtx.resume && audioCtx.resume(); } catch(_){}
+  const panel = document.getElementById('wo-rest'), cnt = document.getElementById('wo-count');
+  wo.end = Date.now() + sec * 1000; panel.hidden = false;
+  const tick = () => {
+    const left = Math.max(0, Math.ceil((wo.end - Date.now()) / 1000));
+    cnt.textContent = left;
+    if(left <= 0){ clearInterval(woTick); panel.hidden = true; chime(); }
+  };
+  tick(); woTick = setInterval(tick, 250);
+}
+function stopSheet(){
+  clearInterval(woTick);
+  const r = document.getElementById('wo-rest'); if(r) r.hidden = true;
+  const sh = document.getElementById('wo-sheet');
+  sh.innerHTML = `<div class="wo-sheet-in">
+    <h2>운동을 멈추고 쉬세요</h2>
+    <p>왼쪽으로 누워 무릎 사이와 배 아래에 쿠션을 받치고, 천천히 호흡하세요. 통증이나 불편함이 가라앉을 때까지 운동을 다시 시작하지 마세요.</p>
+    ${STOP}
+    <div class="wo-sheet-act"><button type="button" class="ok" data-wo="resume">괜찮아졌어요, 계속하기</button><button type="button" data-wo="exit">오늘은 그만하기</button></div>
+  </div>`;
+  sh.hidden = false; sh.scrollTop = 0;
+}
+function finishWorkout(){
+  clearInterval(woTick);
+  const sets = wo.list.reduce((a, x) => a + Math.min(x.done, x.sets), 0);
+  document.getElementById('wo').innerHTML = `<div class="wo-done">
+    <p class="wo-phase">오늘의 허리 운동</p>
+    <h2>운동을 마쳤어요</h2>
+    <p class="wo-done-n"><b>${wo.list.length}</b>가지 운동 · <b>${sets}</b>세트</p>
+    <p>운동 뒤에는 물을 마시고, 내일 허리와 몸 상태를 확인한 다음 강도를 조절하세요.</p>
+    <button type="button" class="wo-start" data-wo="exit">결과 화면으로</button>
+  </div>`;
+}
+function closeWorkout(){
+  clearInterval(woTick); wo = null;
+  const el = document.getElementById('wo'); if(el) el.remove();
+  document.body.classList.remove('wo-open');
+}
+function woClick(e){
+  const s = e.target.closest('[data-set]');
+  if(s && wo){
+    const it = wo.list[wo.i], k = +s.dataset.set;
+    if(k < it.done){ it.done = k; renderWo(); return; }   // 잘못 누르면 그 번호부터 다시
+    it.done = k + 1; renderWo();
+    if(it.done < it.sets || wo.i < wo.list.length - 1) startRest(wo.rest);
+    return true;
+  }
+  const b = e.target.closest('[data-wo]'); if(!b) return false;
+  const a = b.dataset.wo;
+  if(a === 'start') startWorkout();
+  else if(!wo && a !== 'exit') return true;
+  else if(a === 'exit') closeWorkout();
+  else if(a === 'next'){ clearInterval(woTick); if(wo.i === wo.list.length - 1) finishWorkout(); else { wo.i++; renderWo(); } }
+  else if(a === 'prev'){ clearInterval(woTick); if(wo.i){ wo.i--; renderWo(); } }
+  else if(a === 'more'){ wo.end += 10000; }
+  else if(a === 'skip'){ wo.end = Date.now(); }
+  else if(a === 'stop') stopSheet();
+  else if(a === 'resume'){ document.getElementById('wo-sheet').hidden = true; }
+  return true;
+}
+document.addEventListener('keydown', e => { if(e.key === 'Escape' && wo) closeWorkout(); });
 
 /* ---------- 화면 전환 ---------- */
 const TITLES = {cause:'요통 유발원인',symptom:'주요 증상',consider:'운동 시 고려사항',early:'임신 초기 프로그램',mid:'임신 중기 프로그램',late:'임신 후기 프로그램'};
@@ -1316,6 +1533,7 @@ document.addEventListener('click', e => {
     return;
   }
   if(e.target.closest('[data-hero-go]')){ if(!dueOk()) return; qStep = 1; heroStart = true; location.hash = 'plan'; return; }
+  if(woClick(e)) return;
   if(e.target.closest('[data-print]')){ window.print(); return; }
   const b = e.target.closest('[data-go]'); if(!b) return;
   const id = b.dataset.go;
